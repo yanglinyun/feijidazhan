@@ -17,7 +17,7 @@
 
 			var artResX:Number = this.artRes.x;
 			var artResY:Number = this.artRes.y;
-
+			
 			switch (this.curDirection)
 			{
 				case 0 :
@@ -52,7 +52,7 @@
 					break;
 			}
 
-			
+			trace(Math.abs(artResY),Math.abs(curMoveNode.y));
 			if (Math.abs(artResX) > Math.abs(curMoveNode.x) || Math.abs(artResY) > Math.abs(curMoveNode.y))
 			{
 
@@ -61,13 +61,12 @@
 				if (this.moveNode.length <= 0)
 				{
 					// 派发运动结束事件
-
+					trace("派发运动结束事件");
 					this.artRes.dispatchEvent(new Event('MoveComplete'));
 				}
 			}
 			else
 			{
-
 				this.artRes.x = artResX;
 				this.artRes.y = artResY;
 			}

@@ -9,9 +9,9 @@
 		protected var curLife:Number;
 		protected var bulletTypeArr:Array;
 		
-		public function Plane(posX:Number, posY:Number, width:Number=0, height:Number=0, rotation:Number=0)
+		public function Plane(moveArea:Object=null, posX:Number=0, posY:Number=0, speed:Number=1, width:Number=0, height:Number=0, rotation:Number=0)
 		{
-			super(posX, posY, width, height, rotation);
+			super(moveArea, posX, posY, speed, width, height, rotation);
 			
 		}
 		

@@ -6,14 +6,13 @@
 
 	public class Background extends MoveGameItem
 	{
-
-
-		public function Background(posX:Number, posY:Number, width:Number=0, height:Number=0, rotation:Number=0)
+		public function Background(moveArea:Object=null, posX:Number = 0, posY:Number = 0, speed:Number=1, width:Number=0, height:Number=0, rotation:Number=0)
 		{
-			super(posX, posY, width, height, rotation);
+			super(moveArea, posX, posY, speed, width, height, rotation);
 			this.addEventListener('MoveComplete',repeat);
+			this.moveWay = new LineMove(this,[2], [this.speed], [{x:0, y:-1200}]);
 		}
-
+		
 		public function repeat(evt:Event)
 		{
 			this.x = 0;
