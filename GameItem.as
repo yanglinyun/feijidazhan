@@ -1,7 +1,7 @@
 ﻿package  {
-	import flash.display.Sprite;
+	import flash.display.MovieClip;
 	
-	public class GameItem extends Sprite{
+	public class GameItem extends MovieClip{
 		
 		public function GameItem(posX:Number, posY:Number, width:Number=0, height:Number=0, rotation:Number=0) {
 			this.x = posX;

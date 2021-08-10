@@ -52,7 +52,7 @@
 					break;
 			}
 
-
+			
 			if (Math.abs(artResX) > Math.abs(curMoveNode.x) || Math.abs(artResY) > Math.abs(curMoveNode.y))
 			{
 
