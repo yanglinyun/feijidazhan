@@ -17,7 +17,7 @@
 			this.isFreeze = false;
 			this.addEventListener('MoveComplete',freeze);
 		}
-		override protected function freeze() {
+		override protected function freeze(evt:Event) {
 			this.isFreeze = true;
 			this.removeEventListener('MoveComplete',freeze);
 			trace("freeze");

@@ -15,7 +15,6 @@
 		private var myPlaneMoveArea:Object = {x:{max:ScreenWidth,min:panel.width-50,scale:ScreenWidth - panel.width + 50},y:{max:ScreenHight,min:200,scale:ScreenHight-200}};
 		private var myPlane:MyPlane = new MyPlane(myPlaneMoveArea,10);
 		private var enemyPlaneMoveArea:Object = {x:{max:ScreenWidth,min:panel.width-50,scale:ScreenWidth - panel.width + 50},y:{max:ScreenHight,min:0,scale:ScreenHight}};
-		private var myEnemyPlane1:EnemyPlane1 = new EnemyPlane1(enemyPlaneMoveArea,10);
 		private var keyBoradController:KeyBoradController;
 		 
 		public function Main()
@@ -30,8 +29,8 @@
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 
 			// 舞台注册
-			//addChild(background);
-			//moveItemList.push(background);
+			addChild(background);
+			moveItemList.push(background);
 			// 左面板注册;
 			addChild(panel);
 			// 我方飞机注册

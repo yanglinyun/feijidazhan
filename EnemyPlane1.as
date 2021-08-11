@@ -5,7 +5,7 @@
 	
 	public class EnemyPlane1 extends EnemyPlane{
 	
-		public function EnemyPlane1(moveArea:Object,speed:Number) {
+		public function EnemyPlane1(moveArea:Object,speed:Number=3) {
 			super(moveArea,speed );
 			this.moveWay = new LineMove(this,[6], [this.speed], [{x:960, y:moveArea.y.max}])
 		}

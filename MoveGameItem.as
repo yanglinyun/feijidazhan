@@ -1,6 +1,6 @@
 ﻿package 
 {
-
+	import flash.events.Event;
 	public class MoveGameItem extends GameItem
 	{
 		public var speed:Number;
@@ -30,7 +30,7 @@
 		{
 			this.moveWay.update();
 		}
-		protected function freeze() {
+		protected function freeze(evt:Event) {
 			this.isFreeze = true;
 			this.removeEventListener('MoveComplete',freeze);
 		}
