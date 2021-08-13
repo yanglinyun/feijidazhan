@@ -14,7 +14,7 @@
 
 		override public function update()
 		{
-
+			
 			var artResX:Number = this.artRes.x;
 			var artResY:Number = this.artRes.y;
 			
@@ -51,17 +51,24 @@
 				default :
 					break;
 			}
-
-			trace(Math.abs(artResY),Math.abs(curMoveNode.y));
-			if (Math.abs(artResX) > Math.abs(curMoveNode.x) || Math.abs(artResY) > Math.abs(curMoveNode.y))
+			var isEnd:Boolean = false;
+			if(curDirection<=4) {
+				isEnd =  Math.abs(artResX) > Math.abs(curMoveNode.x) || (artResY) < (curMoveNode.y)
+			}else{
+				isEnd = Math.abs(artResX) > Math.abs(curMoveNode.x) || (artResY) > (curMoveNode.y)
+			}
+		
+			if(isEnd)
 			{
 
-				this.artRes.x = curMoveNode.x;
-				this.artRes.y = curMoveNode.y;
+				// this.artRes.x = curMoveNode.x;
+				// this.artRes.y = curMoveNode.y;
 				if (this.moveNode.length <= 0)
 				{
 					// 派发运动结束事件
-					trace("派发运动结束事件");
+					
+					trace("派发运动结束事件")
+					//this.arrRes.freeze2();
 					this.artRes.dispatchEvent(new Event('MoveComplete'));
 				}
 			}

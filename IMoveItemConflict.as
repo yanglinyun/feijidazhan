@@ -2,7 +2,7 @@
 	
 	public interface IMoveItemConflict {
 
-		 function hit();
+		 function hit(Object:*);
 		 function destory();
 
 	}

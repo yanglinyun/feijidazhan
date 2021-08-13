@@ -1,33 +1,34 @@
-﻿package {
-    import flash.display.Sprite;
-    import flash.display.DisplayObject;
-    import flash.events.*;
+﻿package 
+{
+	import flash.display.Sprite;
+	import flash.events.KeyboardEvent;
+	import flash.events.Event;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
+	public class Test extends Sprite
+	{
+		private var TestTime:Timer = new Timer(1000);
+		private var timeCount = 0;
+		public function Test()
+		{
+			TestTime.addEventListener(TimerEvent.TIMER,OnTimer);
+			TestTime.start();
 
-    public class test extends Sprite {
-        private var bgColor:uint = 0x00CCFF;
-        private var size:uint = 80;
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, KeyDownHandler);
+		}
 
-        public function test() {
-            var child:Sprite = new Sprite();
-            child.graphics.beginFill(bgColor);
-            child.graphics.drawRect(0, 0, size, size);
-            child.graphics.endFill();
-            addChild(child);
-            stage.focus = child;
-            child.addEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler);
-            child.addEventListener(KeyboardEvent.KEY_UP, keyUpHandler);
-        }
+		
 
-        private function keyDownHandler(event:KeyboardEvent):void {
-            trace("keyDownHandler: " + event.keyCode);
-            trace("ctrlKey: " + event.ctrlKey);
-            trace("keyLocation: " + event.keyLocation);
-            trace("shiftKey: " + event.shiftKey);
-            trace("altKey: " + event.altKey);
-        }
-
-        private function keyUpHandler(event:KeyboardEvent):void {
-            trace("keyUpHandler: " + event.keyCode);
-        }
-    }
-}
+		private function OnTimer(e:TimerEvent)
+		{
+			trace(timeCount);
+			trace("========================================");
+			timeCount = 0;
+		}
+		public function KeyDownHandler(e:KeyboardEvent)
+		{
+			timeCount++;
+			
+		}
+	}
+};

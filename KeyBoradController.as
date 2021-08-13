@@ -33,14 +33,14 @@
 		
 		private function keyTwo()
 		{
-			trace("绑定事件");
+		
 			this.stage.addEventListener(KeyboardEvent.KEY_DOWN, KeyDownHandler);
 			this.stage.addEventListener(KeyboardEvent.KEY_UP, KeyUpHandler);
 		}
 		
 		private function KeyDownHandler(evt:KeyboardEvent){
+		
 			for(var i:int=0; i<this.keyDownArr.length; i++){
-				// this.keyDownArr[i].dispatchEvent(new KeyboardEvent("keydown"));
 				this.keyDownArr[i].KeyDownHandler(evt);
 			}
 			

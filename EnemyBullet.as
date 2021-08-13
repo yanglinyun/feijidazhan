@@ -5,8 +5,8 @@ package  {
 	public class EnemyBullet extends Bullet{
 		
 		
-		public function EnemyBullet(moveArea:Object,speed:Number)  {
-			super(moveArea,0,0,speed );
+		public function EnemyBullet(moveArea:Object,posX:Number, posY:Number, speed:Number)  {
+			super(moveArea,posX,posY,speed );
 		}
 		protected function born(){
 			// this.x = Math.random() * (moveArea.x.scale - this.width) + moveArea.x.min;

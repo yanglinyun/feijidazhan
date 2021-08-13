@@ -14,6 +14,8 @@
 			super( posX, posY, width, height, rotation);
 			this.speed = speed;
 			this.moveArea = moveArea;
+			this.isFreeze = false;
+			this.addEventListener('MoveComplete',freeze);
 		}
 		
 		protected function judgeMoveArea(){
@@ -23,13 +25,13 @@
 			if(nextPosY<this.moveArea.y.min || nextPosY>this.moveArea.y.max-this.height){
 				nextPosY = (nextPosY<this.moveArea.y.min)?this.moveArea.y.min:this.moveArea.y.max-this.height;
 			}
-			this.x = nextPosX
-			this.y = nextPosY
+			
 		}
-		public function move()
+		public function move(isMyPlane:Boolean = false)
 		{
 			this.moveWay.update();
 		}
+		
 		protected function freeze(evt:Event) {
 			this.isFreeze = true;
 			this.removeEventListener('MoveComplete',freeze);
