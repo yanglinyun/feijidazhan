@@ -4,17 +4,17 @@
 	import flash.events.Event;
 	import flash.display.MovieClip;
 	import flash.display.Stage;
-	import flash.events.EventDispatcher;// 发送事件类c
+	import flash.events.EventDispatcher;
 	
 	public class KeyBoradController
 	{
-		private var stage:Stage;
+		private var stage:Stage = GameItem.stage;
 		private var keyDownArr:Array = [];
 		private var keyUpArr:Array = [];
 		
-		public function KeyBoradController(stage:Stage)
+		public function KeyBoradController()
 		{
-			this.stage = stage
+			trace(stage.stageWidth);
 			keyTwo();
 		}
 		

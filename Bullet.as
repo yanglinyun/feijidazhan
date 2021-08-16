@@ -3,8 +3,16 @@
 	public class Bullet extends MoveGameItem implements IMoveItemConflict{
 
 		protected var force:Number = 10;
+		private var _moveArea:MoveArea;
+		
 		public function Bullet(moveArea:Object=null, posX:Number=0, posY:Number=0, speed:Number=1, width:Number=0, height:Number=0, rotation:Number=0) {
-			super(moveArea, posX, posY, speed, width, height, rotation);
+			this._moveArea = new MoveArea(
+				GameItem.ScreenWidth, 
+				MoveGameItem.panel.width-50,
+				GameItem.ScreenHeight,
+				0
+			)
+			super(_moveArea, posX, posY, speed, width, height, rotation);
 			this.addEventListener('MoveComplete',freeze);
 		}
 		
@@ -28,14 +36,14 @@
 			
 			this.x = posX;
 			this.y = posY;
-			trace(GameItem.stage);
+		
 			GameItem.stage.addChild(this);
 			
 		}
 		override protected function freeze(evt:Event) {
 			this.isFreeze = true;
 			this.removeEventListener('MoveComplete',freeze);
-			trace("freeze");
+		
 			
 		}
 

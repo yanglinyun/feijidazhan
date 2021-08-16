@@ -6,10 +6,10 @@
 	public class TwoBullet extends MyBullet {
 		
 		
-		public function TwoBullet(moveArea:Object,posX:Number, posY:Number, speed:Number) {
+		public function TwoBullet(moveArea:Object=null,posX:Number=0, posY:Number=0, speed:Number=10) {
 			super(moveArea,posX,posY,speed );
-			this.force = 2;
-			this.moveWay = new LineMove(this,[2], [this.speed], [{x:posX, y:-this.height}])
+			this.force = 8;
+			this.moveWay = new LineMove(this,[2], [speed], [{x:0, y:-this.height}])
 		}
 	}
 	

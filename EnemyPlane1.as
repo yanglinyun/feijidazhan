@@ -3,63 +3,58 @@ package  {
 	
 	import flash.events.Event;
 	import flash.display.MovieClip;
-	 import flash.utils.*;
+	import flash.utils.*;
 
 	public class EnemyPlane1 extends EnemyPlane{
-		
 		private var timeOutId:uint;
 		private var fireTimeOutId:uint;
 		private var that:EnemyPlane1;
-		public function EnemyPlane1(moveArea:Object,speed:Number=3) {
-			that =this;
+		public function EnemyPlane1(moveArea:MoveArea=null,speed:Number=3) {
+			that = this;
 			super(moveArea,speed );
 			(((getChildByName("lifeBar")  as MovieClip ).getChildByName("lifeBar") as MovieClip)).gotoAndStop(0)
-			//this.getChildByName("lifeBar").getChildByName("lifeBar").gotoAndStop(100);
 			this.curLife = this.totalLife = 20;
-			this.moveWay = new LineMove(this,[6], [this.speed], [{x:960, y:moveArea.y.max}])
+			this.moveWay = new LineMove(this,[6], [this.speed], [{x:960, y:this.moveArea.yMax}])
 			fireTimeOutId = setInterval(function(){
-					that.fire();
-				}, 1200)
+					that.fire(EnemyBullet1);
+				}, 800)
 		}
 
-		override protected function fire() {
+		override protected function fire(bulletType:*) {
 			var bullet:EnemyBullet1;
 			for(var i:int=0; i<bulletArr.length; i++){
-				if(bulletArr[i].isFreeze){
-					trace("========重复利用========");
-					bulletArr[i].born(this.x + this.width / 2, this.y);
-					trace("========重复利用========");
+				if(bulletArr[i].isFreeze && (bulletArr[i] is bulletType)){
+					bulletArr[i].born(this.x, this.y + this.height - 20);
 					return;
 				}
 			}
 			
-			bullet = new EnemyBullet1(this.moveArea, this.x + this.width / 2, this.y, 3);
+			bullet = new bulletType(this.moveArea, this.x, this.y + this.height  - 20, 8);
 			bulletArr.push(bullet);
 			stage.addChild(bullet);
-			trace(stage);
-			//trace('fire');
-			//trace(bullet.x);
-			//trace('================');
 		}
 
 		override public function bang(force:Number) {
 			
 			this.curLife -= force;
+			(((getChildByName("lifeBar")  as MovieClip ).getChildByName("lifeBar") as MovieClip)).gotoAndStop(100 * (totalLife - curLife) / totalLife)
 			trace("当前血量"+this.curLife)
 			if(this.curLife<=0){
-				this.play();
-				this.isFreeze = false;
-				this.randomBorn();
-				timeOutId || clearTimeout(timeOutId);
+				that.gotoAndStop(3);
+				// timeOutId || clearTimeout(timeOutId);
+				panel.updateScore(that.totalLife);
+				timeOutId = setTimeout(function(){
+					clearTimeout(timeOutId);
+					that.isFreeze = false;
+					that.randomBorn();
+				}, 100)
 			}else{
 				this.gotoAndStop(2);
-				(((getChildByName("lifeBar")  as MovieClip ).getChildByName("lifeBar") as MovieClip)).gotoAndStop(100 * (totalLife - curLife) / totalLife)
+				
 				timeOutId = setTimeout(function(){
 					clearTimeout(timeOutId);
 					that.gotoAndStop(1);
 				}, 1000)
-				
-				//this.getChildByName("lifeBar").getChildByName("lifeBar").gotoAndStop(100 * curLife / totalLife)
 			}
 		}
 		

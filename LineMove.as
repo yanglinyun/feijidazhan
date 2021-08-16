@@ -51,32 +51,32 @@
 				default :
 					break;
 			}
+
 			var isEnd:Boolean = false;
+			
 			if(curDirection<=4) {
-				isEnd =  Math.abs(artResX) > Math.abs(curMoveNode.x) || (artResY) < (curMoveNode.y)
-			}else{
-				isEnd = Math.abs(artResX) > Math.abs(curMoveNode.x) || (artResY) > (curMoveNode.y)
+				isEnd = artResX < curMoveNode.x || artResY < curMoveNode.y;
+			}
+			else{
+				isEnd = artResX > curMoveNode.x || artResY > curMoveNode.y;
 			}
 		
 			if(isEnd)
 			{
-
-				// this.artRes.x = curMoveNode.x;
-				// this.artRes.y = curMoveNode.y;
 				if (this.moveNode.length <= 0)
 				{
 					// 派发运动结束事件
-					
-					trace("派发运动结束事件")
-					//this.arrRes.freeze2();
+					trace("结束")
 					this.artRes.dispatchEvent(new Event('MoveComplete'));
 				}
 			}
 			else
 			{
+			//	trace("子弹移动" + this.artRes.y);
 				this.artRes.x = artResX;
 				this.artRes.y = artResY;
 			}
+
 		}
 
 	}

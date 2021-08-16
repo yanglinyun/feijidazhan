@@ -21,7 +21,7 @@ myTimer.start();//Timer实例需要start来进行启动
 }
 private function timerHandler(event:TimerEvent){//Timer实例调用的方法
 txt.text="FPS:"+count
-trace("FPS:"+count)
+//trace("FPS:"+count)
 count=0//每隔1秒进行清零
 
 }

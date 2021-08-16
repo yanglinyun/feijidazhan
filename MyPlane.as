@@ -1,104 +1,95 @@
 ﻿package  {
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
-	
+	import flash.utils.*;
+	import flash.display.BitmapData;
+	import flash.display.Bitmap;
+	import flash.utils.*;
 	public class MyPlane extends Plane{
 
-
 		private var keyObj:Object = {};
-		
 		private var keyArr:Array = [];
+		private var _moveArea:MoveArea;
+		private var _speed:Number = 7;
+		private var that:EnemyPlane1;
+		private var timeOutId:uint;
+		private var fireThrottle:Boolean = false;//1s 一次
+		private var fireThrottleTimeId:uint;//1s 一次
+
+
+		public function MyPlane() {
 		
-		
-		public function MyPlane(moveArea:Object,speed:Number, panel:Panel) {
-			super(moveArea,0,0,speed );
+			this._moveArea = new MoveArea(
+				GameItem.ScreenWidth, 
+				MoveGameItem.panel.width-50,
+				GameItem.ScreenHeight,
+				200
+			)
+			super(this._moveArea ,0 ,0 , _speed);
 			//bulletTypeArr.push(MyBullet1);
 			// 居中显示
-			midDisplay(moveArea);
-			this.gotoAndStop(1);
-			// this.addEventListener(KeyboardEvent.KEY_DOWN, KeyDownHandler);
-			// this.addEventListener(KeyboardEvent.KEY_UP, KeyUpHandler);
-			this.totalLife = this.curLife = 800;
-			panel.updateInfo(this.curLife, this.totalLife)
-		}
-		private function midDisplay(moveArea:Object){
-			//trace(moveArea.y.max, this.height);
-			this.x = moveArea.x.min + moveArea.x.scale / 2 - this.width / 2;
-			this.y = moveArea.y.max - this.height;
-			//trace(this.x, this.y);
+			midDisplay();
 			
+			this.gotoAndStop(1); // 正常状态
+			this.totalLife = this.curLife = 800; // 血量
+			panel.updateInfo(this.curLife, this.totalLife)
+
+			setInterval(fire, 400, TwoBullet);
 		}
-		override protected function fire() {
-			var bullet:TwoBullet;
+
+		override protected function fire(bulletType:*) {
+			var bullet:*;
 			for(var i:int=0; i<bulletArr.length; i++){
-				if(bulletArr[i].isFreeze){
-					trace("========重复利用========");
+				trace(bulletArr.length);
+				if(bulletArr[i].isFreeze && (bulletArr[i] is bulletType)){
+					//trace("========重复利用========");
 					bulletArr[i].born(this.x + this.width / 2, this.y);
-					trace("========重复利用========");
+					//trace("========重复利用========");
 					return;
 				}
 			}
+			// 新new
+			bullet = new bulletType(this.x + this.width / 2, this.y);
 			
-			bullet = new TwoBullet(this.moveArea, this.x + this.width / 2, this.y, 3);
 			bulletArr.push(bullet);
 			stage.addChild(bullet);
-			trace(stage);
-			//trace('fire');
-			//trace(bullet.x);
-			//trace('================');
+			
 		}
+
+		override public function bang(force:Number) {
+			
+			this.curLife -= force;
+			trace("我飞机当前血量"+this.curLife)
+			if(this.curLife<=0){
+				// that.gotoAndStop(3);
+				// // timeOutId || clearTimeout(timeOutId);
+				// timeOutId = setTimeout(function(){
+				// 	clearTimeout(timeOutId);
+				// 	that.isFreeze = false;
+				// 	that.randomBorn();
+				// }, 100)
+				trace("游戏结束");
+			}else{
+				if(keyObj[37]){ // 左移损害
+					this.gotoAndStop(6);
+				}else if(keyObj[39]){// 右移损害
+					this.gotoAndStop(4);
+				}else{
+					this.gotoAndStop(2);
+				}
+				
+				timeOutId = setTimeout(function(){
+					clearTimeout(timeOutId);
+					that.gotoAndStop(1);
+				}, 500)
+			}
+			panel.updateInfo(this.curLife, this.totalLife)
+		}
+		
+
 		public function KeyDownHandler(e:KeyboardEvent)
 		{
-			
 			keyObj[e.keyCode] = true;
-
-			
-		}
-
-		override public function move(isMyPlane:Boolean = false)
-		{
-
-			nextPosX = this.x;
-			nextPosY = this.y;
-
-			
-			if (keyObj[32])
-			{
-				
-				this.fire();
-			
-			}
-			if (keyObj[37])
-			{
-				trace("left");
-				nextPosX-=  this.speed;
-				this.gotoAndStop(5);
-			}
-			if (keyObj[38])
-			{
-				trace("down");
-				nextPosY -=  this.speed;
-				
-			}
-			if (keyObj[39])
-			{
-				trace("right");
-				this.gotoAndStop(3);
-				nextPosX +=  this.speed;
-			}
-
-			if (keyObj[40])
-			{
-				trace("up");
-				nextPosY +=  this.speed;
-			}
-		
-			this.judgeMoveArea()
-
-			
-			this.x = nextPosX
-			this.y = nextPosY
-			
 		}
 
 		public function KeyUpHandler(e:KeyboardEvent)
@@ -107,6 +98,55 @@
 		
 		}
 
+		override public function move(isMyPlane:Boolean = false)
+		{
+			nextPosX = this.x;
+			nextPosY = this.y;
+
+			if (keyObj[32])
+			{
+				
+				if(!fireThrottle){
+					fireThrottle = true;
+					fireThrottleTimeId = setTimeout(function ():void
+					{
+						clearTimeout(fireThrottleTimeId)
+						fireThrottle = false;
+					},1000);
+					this.fire(MissleBullet);
+					
+				}
+				
+			}
+			if (keyObj[37])
+			{
+				nextPosX -=  this.speed;
+				this.gotoAndStop(5);
+			}
+			if (keyObj[38])
+			{
+				nextPosY -=  this.speed;	
+			}
+			if (keyObj[39])
+			{
+				this.gotoAndStop(3);
+				nextPosX +=  this.speed;
+			}
+
+			if (keyObj[40])
+			{
+				nextPosY +=  this.speed;
+			}
+			// 判断是否越位 更新nextPos
+			this.judgeMoveArea()
+
+			// 更新飞机位置
+			this.x = nextPosX
+			this.y = nextPosY
+			
+			
+		}
+		
 	}
 	
 }

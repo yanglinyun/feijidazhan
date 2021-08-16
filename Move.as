@@ -14,11 +14,11 @@
 		protected var moveNode:Array;
 		protected var artRes:MoveGameItem;
 
-		public function Move(artRes:MoveGameItem, direction:Array, frameSpeed:Array, moveNode:Array)
+		// 初始化移动事件
+		public function Move(artRes:MoveGameItem, direction:Array , frameSpeed:Array, moveNode:Array)
 		{
 			this.direction = direction;
 			this.artRes = artRes;
-
 			this.frameSpeed = frameSpeed;
 			this.moveNode = moveNode;
 			this.curDirection = this.direction.shift();
@@ -27,6 +27,7 @@
 
 		}
 
+		// 运动更新处理函数
 		public function update()
 		{
 

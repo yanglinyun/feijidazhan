@@ -15,11 +15,18 @@
 			super(moveArea, posX, posY, speed, width, height, rotation);
 			
 		}
+
+		// 可移动区域居中显示
+		protected function midDisplay(){
+			this.x = this.moveArea.xMin + this.moveArea.xScale / 2 - this.width / 2;
+			this.y = this.moveArea.yMax - this.height;
+			
+		}
 		public function bang(force:Number){
 
 		}
 		
-		protected function fire(){
+		protected function fire(bulletType:*){
 			
 		}
 		
