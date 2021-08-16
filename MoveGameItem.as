@@ -21,11 +21,11 @@
 		
 		protected function judgeMoveArea(){
 			if(nextPosX<this.moveArea.xMin || nextPosX>this.moveArea.xMax-this.width){
-				trace("falseX")
+				////trace("falseX")
 				nextPosX = (nextPosX<this.moveArea.xMin)?this.moveArea.xMin:this.moveArea.xMax-this.width;
 			}
 			if(nextPosY<this.moveArea.yMin || nextPosY>this.moveArea.yMax-this.height){
-				trace("falseY")
+				////trace("falseY")
 				nextPosY = (nextPosY<this.moveArea.yMin)?this.moveArea.yMin:this.moveArea.yMax-this.height;
 			}
 

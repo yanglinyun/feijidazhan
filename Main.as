@@ -13,7 +13,7 @@
 		private var panel:Panel =  new Panel(0,0);
 		private var myPlaneMoveArea:Object = {x:{max:ScreenWidth,min:panel.width-50,scale:ScreenWidth - panel.width + 50},y:{max:ScreenHight,min:200,scale:ScreenHight-200}};
 		private var myPlane:MyPlane;
-		private var enemyPlane1:EnemyPlane1;
+		private var enemyPlane1:EnemyPlane2;
 		private var keyBoradController:KeyBoradController;
 
 		private var fp:FPSShow;
@@ -47,7 +47,7 @@
 			addChild(myPlane);
 			moveItemList.push(myPlane);
 			// // 添加敌机
-			enemyPlane1 = new EnemyPlane1();
+			enemyPlane1 = new EnemyPlane2();
 			moveItemList.push(enemyPlane1);// x = 960 屏幕宽度 防止提前碰边界
 			addChild(enemyPlane1);
 			this.addEventListener(Event.ENTER_FRAME, onEnterframe);
@@ -65,18 +65,27 @@
 		
 			for (var i:int=0; i<moveItemList.length; i++)
 			{
+				
 				if(!moveItemList[i].isFreeze) {
 					moveItemList[i].move();
 					if(moveItemList[i] is Plane){
-						//trace("===status=======")
+						////trace("===status=======")
 						moveItemList[i].bulletArr.forEach(function(item:Bullet, index:int, arr:Array){
-							//trace(item.isFreeze);
+							////trace(item.isFreeze);
 							if(!item.isFreeze && !(item is MissleBullet) ){
 								item.move();
-								if(moveItemList[i] is EnemyPlane){
+								if(Panel.useMissle){ // 导弹清屏-10点
+									enemyPlane1.bang(10);
+									Panel.useMissle = false;
+								}
+								if(moveItemList[i] is EnemyPlane && myPlane.curLife >0){
 									item.hit(myPlane);
 								}else{
-									item.hit(enemyPlane1);
+
+									if(enemyPlane1.curLife >0){
+										item.hit(enemyPlane1);
+									}
+									
 								}
 							}
 						})

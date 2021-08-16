@@ -6,7 +6,7 @@
 	public class Plane extends MoveGameItem implements IMoveItemConflict{
 		
 		protected var totalLife:Number;
-		protected var curLife:Number;
+		public var curLife:Number;
 		protected var bulletTypeArr:Array;
 		public var bulletArr:Array = []; // 飞机子弹对象池
 		

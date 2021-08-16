@@ -10,7 +10,7 @@ package  {
 		}
 		// protected function born(){
 		// 	// this.x = Math.random() * (moveArea.x.scale - this.width) + moveArea.x.min;
-		// 	// trace("randomBorn");
+		// 	// //trace("randomBorn");
 		// 	// this.y = 0;
 		// 	this.isFreeze = false;
 		// 	this.addEventListener('MoveComplete',freeze);
@@ -18,7 +18,7 @@ package  {
 		// override protected function freeze(evt:Event) {
 		// 	this.isFreeze = true;
 		// 	this.removeEventListener('MoveComplete',freeze);
-		// 	trace("freeze");
+		// 	//trace("freeze");
 		// 	this.born();
 		// }
 	}

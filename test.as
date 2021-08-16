@@ -11,7 +11,7 @@
 		private var timeCount = 0;
 		public function test()
 		{
-			trace(stage.stageWidth, stage.stageHeight);
+			//trace(stage.stageWidth, stage.stageHeight);
 			// TestTime.addEventListener(TimerEvent.TIMER,OnTimer);
 			// TestTime.start();
 
@@ -22,8 +22,8 @@
 
 		private function OnTimer(e:TimerEvent)
 		{
-			trace(timeCount);
-			trace("========================================");
+			//trace(timeCount);
+			//trace("========================================");
 			timeCount = 0;
 		}
 		public function KeyDownHandler(e:KeyboardEvent)

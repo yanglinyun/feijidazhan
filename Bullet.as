@@ -18,17 +18,17 @@
 		
 		public function hit(target:*){
 			if(this.hitTestObject(target)){
-				trace("hit")
+				//trace("hit")
 				target.bang(this.force);
 				this.isFreeze = true;
 				GameItem.stage.removeChild(this);
-				trace(GameItem.stage);
+				//trace(GameItem.stage);
 			}
 		};
 		public function destory(){};
 		public function born(posX:Number, posY:Number){
 			// this.x = Math.random() * (moveArea.x.scale - this.width) + moveArea.x.min;
-			// trace("randomBorn");
+			// //trace("randomBorn");
 			// this.y = 0;
 			this.isFreeze = false;
 	

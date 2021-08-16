@@ -58,7 +58,12 @@
 				isEnd = artResX < curMoveNode.x || artResY < curMoveNode.y;
 			}
 			else{
-				isEnd = artResX > curMoveNode.x || artResY > curMoveNode.y;
+				if(curDirection>=6){
+					isEnd = artResX > curMoveNode.x || artResY > curMoveNode.y;
+				}else{
+					isEnd = artResX < curMoveNode.x || artResY > curMoveNode.y;
+				}
+				
 			}
 		
 			if(isEnd)
@@ -66,13 +71,13 @@
 				if (this.moveNode.length <= 0)
 				{
 					// 派发运动结束事件
-					trace("结束")
+					//trace("结束")
 					this.artRes.dispatchEvent(new Event('MoveComplete'));
 				}
 			}
 			else
 			{
-			//	trace("子弹移动" + this.artRes.y);
+			//	//trace("子弹移动" + this.artRes.y);
 				this.artRes.x = artResX;
 				this.artRes.y = artResY;
 			}

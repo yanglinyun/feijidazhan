@@ -14,7 +14,7 @@
 		
 		public function KeyBoradController()
 		{
-			trace(stage.stageWidth);
+			//trace(stage.stageWidth);
 			keyTwo();
 		}
 		
