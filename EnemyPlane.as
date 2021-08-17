@@ -9,15 +9,15 @@
 		private var that:EnemyPlane;
 		private var timeOutId:uint;
 		private var fireTimeOutId:uint;
-		public function EnemyPlane(moveArea:MoveArea,speed:Number)  {
+		public function EnemyPlane(posX:Number, posY:Number, moveArea:MoveArea,speed:Number)  {
 			this._moveArea = new MoveArea(
 				GameItem.ScreenWidth, 
 				MoveGameItem.panel.width-50,
 				GameItem.ScreenHeight,
 				0
 			)
-			super(_moveArea,0,0,speed );
-			this.randomBorn();
+			super(_moveArea,posX,posY,speed );
+			//this.randomBorn();
 			this.gotoAndStop(1);
 			that = this;
 		}

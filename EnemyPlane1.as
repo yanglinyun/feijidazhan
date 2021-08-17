@@ -9,9 +9,9 @@ package  {
 		private var timeOutId:uint;
 		private var fireTimeOutId:uint;
 		private var that:EnemyPlane1;
-		public function EnemyPlane1(moveArea:MoveArea=null,speed:Number=3) {
+		public function EnemyPlane1(posX:Number, posY:Number,moveArea:MoveArea=null,speed:Number=3) {
 			that = this;
-			super(moveArea,speed );
+			super(posX,posY,moveArea,speed );
 			(((getChildByName("lifeBar")  as MovieClip ).getChildByName("lifeBar") as MovieClip)).gotoAndStop(0)
 			this.curLife = this.totalLife = 40;
 			this.moveWay = new LineMove(this,[6], [this.speed], [{x:960, y:this.moveArea.yMax}])

@@ -10,9 +10,9 @@ package  {
 		private var fireTimeOutId:uint;
 		private var that:EnemyPlane3;
 		private	var mustCombArr:Array = [EnemyBullet3, EnemyBullet3, EnemyBullet3, EnemyBullet3, EnemyBullet3];
-		public function EnemyPlane3(moveArea:MoveArea=null,speed:Number=3) {
+		public function EnemyPlane3(posX:Number, posY:Number,moveArea:MoveArea=null,speed:Number=3) {
 			that = this;
-			super(moveArea,speed );
+			super(posX,posY,moveArea,speed );
 			(((getChildByName("lifeBar")  as MovieClip ).getChildByName("lifeBar") as MovieClip)).gotoAndStop(0)
 			this.curLife = this.totalLife = 40;
 			this.moveWay = new LineMove(this,[6], [this.speed], [{x:960, y:150}])
