@@ -6,7 +6,7 @@
 
 	public class Move
 	{
-		protected var curDirection:int;// 0~7 逆时针 * 45°= 实际度数 
+		protected var curDirection:Number;// 0~7 逆时针 * 45°= 实际度数 
 		protected var curMoveNode:Object;// 当前终点(x, y)
 		protected var curFrameSpeed:int;// 当前帧速度
 		protected var direction:Array;// 8个方向

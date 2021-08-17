@@ -13,7 +13,7 @@
 		private var panel:Panel =  new Panel(0,0);
 		private var myPlaneMoveArea:Object = {x:{max:ScreenWidth,min:panel.width-50,scale:ScreenWidth - panel.width + 50},y:{max:ScreenHight,min:200,scale:ScreenHight-200}};
 		private var myPlane:MyPlane;
-		private var enemyPlane1:EnemyPlane2;
+		private var enemyPlane1:EnemyPlane4;
 		private var keyBoradController:KeyBoradController;
 
 		private var fp:FPSShow;
@@ -36,6 +36,7 @@
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			// 背景注册
 			background = new Background()
+			MoveGameItem.background = background;
 			addChild(background);
 			moveItemList.push(background);
 			// 左面板注册;
@@ -47,7 +48,7 @@
 			addChild(myPlane);
 			moveItemList.push(myPlane);
 			// // 添加敌机
-			enemyPlane1 = new EnemyPlane2();
+			enemyPlane1 = new EnemyPlane4();
 			moveItemList.push(enemyPlane1);// x = 960 屏幕宽度 防止提前碰边界
 			addChild(enemyPlane1);
 			this.addEventListener(Event.ENTER_FRAME, onEnterframe);

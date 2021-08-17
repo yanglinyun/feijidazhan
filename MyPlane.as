@@ -58,6 +58,9 @@
 				threeBulletArr[0].born(this.x + this.width / 2, this.y);
 				threeBulletArr[1].born(this.x + this.width / 2 - 30, this.y + 20);
 				threeBulletArr[2].born(this.x + this.width / 2 + 30, this.y + 20);
+				stage.addChild(threeBulletArr[0]);
+				stage.addChild(threeBulletArr[1]);
+				stage.addChild(threeBulletArr[2]);
 				return;
 			}
 			

@@ -42,6 +42,8 @@
 		}
 		override protected function freeze(evt:Event) {
 			this.isFreeze = true;
+		
+			stage.removeChild(this);
 			this.removeEventListener('MoveComplete',freeze);
 		
 			

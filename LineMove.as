@@ -18,6 +18,7 @@
 			var artResX:Number = this.artRes.x;
 			var artResY:Number = this.artRes.y;
 			
+		
 			switch (this.curDirection)
 			{
 				case 0 :
@@ -41,8 +42,17 @@
 					artResY +=  this.curFrameSpeed * Math.sin(45);
 					artResX -=  this.curFrameSpeed * Math.cos(45);
 					break;
+				case 5.5 :
+					artResY +=  this.curFrameSpeed * Math.cos(45/2  * Math.PI / 180);
+					artResX -=  this.curFrameSpeed * Math.sin(45/2  * Math.PI / 180);
+					break;
 				case 6 :
 					artResY +=  this.curFrameSpeed;
+					break;
+				case 6.5 :
+					trace("123" + 6.5);
+					artResY +=  this.curFrameSpeed * Math.cos(45/2 * Math.PI / 180);
+					artResX +=  this.curFrameSpeed * Math.sin(45/2 * Math.PI / 180);
 					break;
 				case 7 :
 					artResY +=  this.curFrameSpeed * Math.sin(45);
@@ -62,6 +72,7 @@
 					isEnd = artResX > curMoveNode.x || artResY > curMoveNode.y;
 				}else{
 					isEnd = artResX < curMoveNode.x || artResY > curMoveNode.y;
+					
 				}
 				
 			}
@@ -72,6 +83,7 @@
 				{
 					// 派发运动结束事件
 					//trace("结束")
+				
 					this.artRes.dispatchEvent(new Event('MoveComplete'));
 				}
 			}

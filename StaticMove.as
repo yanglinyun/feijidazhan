@@ -7,9 +7,9 @@
 	public class StaticMove extends Move
 	{
         private var that:MoveGameItem;
-		public function StaticMove(artRes:MoveGameItem)
+		public function StaticMove(artRes:MoveGameItem, direction:Array=null, frameSpeed:Array=null, moveNode:Array=null)
 		{
-			super(artRes,[],[],[]);
+			super(artRes, [], [], []);
             that = artRes;
 		}
 

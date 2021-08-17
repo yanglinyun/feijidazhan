@@ -15,29 +15,35 @@ package  {
 			super(moveArea,speed );
 			(((getChildByName("lifeBar")  as MovieClip ).getChildByName("lifeBar") as MovieClip)).gotoAndStop(0)
 			this.curLife = this.totalLife = 40;
-			this.moveWay = new LineMove(this,[6], [this.speed], [{x:960, y:this.moveArea.yMax}])
+			this.moveWay = new LineMove(this,[6], [this.speed], [{x:960, y:150}])
 			fireTimeOutId = setInterval(fireThreeBullet, 400, mustCombArr.concat());
 
 		}
 
 		private function fireThreeBullet(bulletComb:Array) {
 			var bullet:*;
+			var _mustCombArr:Array = [EnemyBullet2, EnemyBullet2];
 			var threeBulletArr:Array = [];
-		
+			//trace("============================");
 			for(var i:int=0; i<bulletArr.length; i++){
 				
-				if(bulletComb.length==0){
+				if(_mustCombArr.length==0 && threeBulletArr[0].isLeft && !threeBulletArr[1].isLeft){
 					threeBulletArr[0].born(this.x - 20, this.y + 20);
 					threeBulletArr[1].born(this.x + 20, this.y + 20);
+					stage.addChild(threeBulletArr[0]);
+					stage.addChild(threeBulletArr[1]);
 					return;
 				}
-				if(bulletArr[i].isFreeze && (bulletArr[i] is bulletComb[0])){
+				
+				if(bulletArr[i].isFreeze && (bulletArr[i] is EnemyBullet2)){
 			
 					threeBulletArr.push(bulletArr[i]);
-					trace("重复" + threeBulletArr);
-					bulletComb.shift();
+					
+					_mustCombArr.shift();
+					//trace("重复", i);
 				}
 			}
+			//trace("============================");
 			
 			// 新new
 		
@@ -64,6 +70,11 @@ package  {
 			bullet = new bulletType(this.moveArea, this.x, this.y + this.height  - 20, 8);
 			bulletArr.push(bullet);
 			stage.addChild(bullet);
+		}
+
+		override protected function freeze(evt:Event) {
+			// 静止
+			this.removeEventListener('MoveComplete',freeze);
 		}
 
 		

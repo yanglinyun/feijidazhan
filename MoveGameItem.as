@@ -4,6 +4,7 @@
 	public class MoveGameItem extends GameItem
 	{
 		public static var  panel:Panel;// 设置子弹飞机MoveArea用
+		public static var  background:Background;// 设置子弹左出界用
 		public var speed:Number;
 		public var isFreeze:Boolean = false;// 下一帧是否渲染
 		protected var moveArea:Object;
@@ -39,6 +40,8 @@
 		
 		protected function freeze(evt:Event) {
 			this.isFreeze = true;
+			trace("freeze" + this);
+			stage.removeChild(this);
 			this.removeEventListener('MoveComplete',freeze);
 		}
 
