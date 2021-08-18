@@ -16,14 +16,18 @@
 			this.addEventListener('MoveComplete',freeze);
 		}
 		
-		public function hit(target:*){
+		public function hit(target:*):Boolean{
 			if(this.hitTestObject(target)){
-				//trace("hit")
+				
 				target.bang(this.force);
 				this.isFreeze = true;
-				GameItem.stage.removeChild(this);
+				if(GameItem.stage.contains(this)){
+					GameItem.stage.removeChild(this);
+				}
 				//trace(GameItem.stage);
+				return true;
 			}
+			return false;
 		};
 		public function destory(){};
 		public function born(posX:Number, posY:Number){
@@ -40,10 +44,11 @@
 			GameItem.stage.addChild(this);
 			
 		}
-		override protected function freeze(evt:Event) {
+		override protected function freeze(evt:Event=null) {
 			this.isFreeze = true;
-		
-			stage.removeChild(this);
+			if(GameItem.stage.contains(this)){
+				stage.removeChild(this);
+			}
 			this.removeEventListener('MoveComplete',freeze);
 		
 			

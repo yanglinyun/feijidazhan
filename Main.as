@@ -71,24 +71,47 @@
 				if(!Level.moveItemList[i].isFreeze) {
 					Level.moveItemList[i].move();
 					if(Level.moveItemList[i] is Plane){
-						////trace("===status=======")
-						Level.moveItemList[i].bulletArr.forEach(function(item:Bullet, index:int, arr:Array){
-							////trace(item.isFreeze);
-							if(!item.isFreeze && !(item is MissleBullet) ){
-								item.move();
+						// 自己撞敌机或道具
+						for(var j2:Number=0; j2<Level.moveItemList.length; j2++){
+							var enemyPlaneOrProp:* = Level.moveItemList[j2];
+							if((enemyPlaneOrProp is EnemyPlane && enemyPlaneOrProp.curLife >0) || enemyPlaneOrProp is Prop){
+								if(myPlane.hit(enemyPlaneOrProp)){
+									break;
+								}				
+							}
+						}
+						// 检测子弹
+						Level.moveItemList[i].bulletArr.forEach(function(bullet:Bullet, index:int, arr:Array){
+							
+							// bullet为普通 而非 导弹
+							if(!bullet.isFreeze && !(bullet is MissleBullet) ){
+								bullet.move();//子弹移动
+								//==========使用导弹===========//
 								if(Panel.useMissle){ // 导弹清屏-10点
-									//enemyPlane1.bang(10);
-									Panel.useMissle = false;
-								}
-								if(Level.moveItemList[i] is EnemyPlane && myPlane.curLife >0){
-									item.hit(myPlane);
-								}else{
-									/*
-									if(enemyPlane1.curLife >0){
-										item.hit(enemyPlane1);
+									for(var j:Number=0; j<Level.moveItemList.length; j++){
+										var enemyPlane:* = Level.moveItemList[j];
+										if(enemyPlane is EnemyPlane && enemyPlane.curLife >0){
+											enemyPlane.bang(10) //-10点
+										}
 									}
-									*/
-									
+									Panel.useMissle = false;
+								
+								}
+								//==========敌机子弹打到我==============================//
+								if(Level.moveItemList[i] is EnemyPlane && myPlane.curLife >0){
+									bullet.hit(myPlane);
+								}else if(Level.moveItemList[i] is MyPlane){
+									//==========我子弹打到敌机==============================//
+									for(var j2:Number=0; j2<Level.moveItemList.length; j2++){
+										var enemyPlane2:* = Level.moveItemList[j2];
+										if(enemyPlane2 is EnemyPlane && enemyPlane2.curLife >0){
+											
+											if(bullet.hit(enemyPlane2)){
+												break;
+											}
+											
+										}
+									}
 								}
 							}
 						})

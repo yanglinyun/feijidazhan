@@ -15,7 +15,9 @@
 		private var timeOutId:uint;
 		private var fireThrottle:Boolean = false;//1s 一次
 		private var fireThrottleTimeId:uint;//1s 一次
-
+		public static var isDoubleScore:uint = 1;// 双倍经验
+		public var curEffect:int; // 当前特效 0 正常
+		public var effectArr:Array;// 特效集合
 
 		public function MyPlane() {
 		
@@ -37,7 +39,28 @@
 			setInterval(fireThreeBullet, 400, [TwoBullet, ThreeBullet, ThreeBullet]);
 
 			that = this;
+			// 加载特效
+			effectArr.push(null, new LifeEffect(), new MoneyEffect(), new JiGunagEffect(), new MagaEffect());
 		}
+
+		public function addLife(num:Number){
+			 this.curLife = (this.curLife+num)>=this.totalLife?this.totalLife:(this.curLife+num);
+			 panel.updateInfo( this.curLife, this.totalLife)
+		}
+		override public function hit(target:*):Boolean{
+			if(this.hitTestObject(target)){
+				if(target is Plane){
+					target.bang(target.totalLife);
+				this.bang(target.curLife);
+				}else if(target is Prop){
+					target.bang(this);
+			
+				}
+				
+				return true;
+			}
+			return false;
+		};
 
 		private function fireThreeBullet(bulletComb:Array) {
 			var bullet:*;
@@ -194,7 +217,9 @@
 			// 更新飞机位置
 			this.x = nextPosX
 			this.y = nextPosY
-			
+			if(this.curEffect>0){
+				effectArr[this.curEffect].update(this.x, this.y);
+			}
 			
 		}
 		

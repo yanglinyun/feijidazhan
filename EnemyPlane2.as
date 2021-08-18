@@ -7,7 +7,7 @@ package  {
 
 	public class EnemyPlane2 extends EnemyPlane{
 		private var timeOutId:uint;
-		private var fireTimeOutId:uint;
+
 		private var that:EnemyPlane2;
 		private	var mustCombArr:Array = [EnemyBullet2, EnemyBullet2];
 		public function EnemyPlane2(posX:Number, posY:Number,moveArea:MoveArea=null,speed:Number=3) {
@@ -20,6 +20,11 @@ package  {
 
 		}
 
+		public function myReBorn(posX:Number, posY:Number) {
+			reBorn(posX, posY);
+			fireTimeOutId = setInterval(fireThreeBullet, 400, mustCombArr.concat());
+		}
+
 		private function fireThreeBullet(bulletComb:Array) {
 			var bullet:*;
 			var _mustCombArr:Array = [EnemyBullet2, EnemyBullet2];
@@ -30,8 +35,8 @@ package  {
 				if(_mustCombArr.length==0 && threeBulletArr[0].isLeft && !threeBulletArr[1].isLeft){
 					threeBulletArr[0].born(this.x - 20, this.y + 20);
 					threeBulletArr[1].born(this.x + 20, this.y + 20);
-					stage.addChild(threeBulletArr[0]);
-					stage.addChild(threeBulletArr[1]);
+					GameItem.stage.addChild(threeBulletArr[0]);
+					GameItem.stage.addChild(threeBulletArr[1]);
 					return;
 				}
 				
@@ -54,25 +59,12 @@ package  {
 			bulletArr.push(leftBullet);
 			bulletArr.push(rightBullet);
 		
-			stage.addChild(leftBullet);
-			stage.addChild(rightBullet);
+			GameItem.stage.addChild(leftBullet);
+			GameItem.stage.addChild(rightBullet);
 		}
 
-		override protected function fire(bulletType:*) {
-			var bullet:EnemyBullet1;
-			for(var i:int=0; i<bulletArr.length; i++){
-				if(bulletArr[i].isFreeze && (bulletArr[i] is bulletType)){
-					bulletArr[i].born(this.x, this.y + this.height - 20);
-					return;
-				}
-			}
-			
-			bullet = new bulletType(this.moveArea, this.x, this.y + this.height  - 20, 8);
-			bulletArr.push(bullet);
-			stage.addChild(bullet);
-		}
-
-		override protected function freeze(evt:Event) {
+	
+		override protected function freeze(evt:Event=null) {
 			// 静止
 			this.removeEventListener('MoveComplete',freeze);
 		}

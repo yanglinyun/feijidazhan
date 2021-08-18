@@ -7,7 +7,7 @@ package  {
 
 	public class EnemyPlane4 extends EnemyPlane{
 		private var timeOutId:uint;
-		private var fireTimeOutId:uint;
+		
 		private var that:EnemyPlane4;
 		private	var mustCombArr:Array = [EnemyBullet4, EnemyBullet4, EnemyBullet4, EnemyBullet4, EnemyBullet4, EnemyBullet4, EnemyBullet4, EnemyBullet4, EnemyBullet4];
 		public function EnemyPlane4(posX:Number, posY:Number,moveArea:MoveArea=null,speed:Number=3) {
@@ -18,6 +18,11 @@ package  {
 			this.moveWay = new LineMove(this,[6], [this.speed], [{x:960, y:150}])
 			fireTimeOutId = setInterval(fireThreeBullet, 400, mustCombArr.concat());
 
+		}
+
+		public function myReBorn(posX:Number, posY:Number) {
+			reBorn(posX, posY);
+			fireTimeOutId = setInterval(fireThreeBullet, 400, mustCombArr.concat());
 		}
 
 		private function fireThreeBullet(bulletComb:Array) {
@@ -48,15 +53,15 @@ package  {
 					threeBulletArr[7].born(this.x +30, this.y + this.height  -10);
 					threeBulletArr[8].born(this.x +40, this.y + this.height  -40);
 					
-					stage.addChild(threeBulletArr[0]);
-					stage.addChild(threeBulletArr[1]);
-					stage.addChild(threeBulletArr[2]);
-					stage.addChild(threeBulletArr[3]);
-					stage.addChild(threeBulletArr[4]);
-					stage.addChild(threeBulletArr[5]);
-					stage.addChild(threeBulletArr[6]);
-					stage.addChild(threeBulletArr[7]);
-					stage.addChild(threeBulletArr[8]);
+					GameItem.stage.addChild(threeBulletArr[0]);
+					GameItem.stage.addChild(threeBulletArr[1]);
+					GameItem.stage.addChild(threeBulletArr[2]);
+					GameItem.stage.addChild(threeBulletArr[3]);
+					GameItem.stage.addChild(threeBulletArr[4]);
+					GameItem.stage.addChild(threeBulletArr[5]);
+					GameItem.stage.addChild(threeBulletArr[6]);
+					GameItem.stage.addChild(threeBulletArr[7]);
+					GameItem.stage.addChild(threeBulletArr[8]);
 			
 					return;
 				}
@@ -86,32 +91,20 @@ package  {
 
 			bulletArr.push(b1,b2,b3,b4,b5,b6,b7,b8,b9);
 			
-			stage.addChild(b1);
-			stage.addChild(b2);
-			stage.addChild(b3);
-			stage.addChild(b4);
-			stage.addChild(b5);
-			stage.addChild(b6);
-			stage.addChild(b7);
-			stage.addChild(b8);
-			stage.addChild(b9);
+			GameItem.stage.addChild(b1);
+			GameItem.stage.addChild(b2);
+			GameItem.stage.addChild(b3);
+			GameItem.stage.addChild(b4);
+			GameItem.stage.addChild(b5);
+			GameItem.stage.addChild(b6);
+			GameItem.stage.addChild(b7);
+			GameItem.stage.addChild(b8);
+			GameItem.stage.addChild(b9);
 		}
 
-		override protected function fire(bulletType:*) {
-			var bullet:EnemyBullet1;
-			for(var i:int=0; i<bulletArr.length; i++){
-				if(bulletArr[i].isFreeze && (bulletArr[i] is bulletType)){
-					bulletArr[i].born(this.x, this.y + this.height - 20);
-					return;
-				}
-			}
-			
-			bullet = new bulletType(this.moveArea, this.x, this.y + this.height  - 20, 8);
-			bulletArr.push(bullet);
-			stage.addChild(bullet);
-		}
+		
 
-		override protected function freeze(evt:Event) {
+		override protected function freeze(evt:Event=null) {
 			// 静止
 			this.removeEventListener('MoveComplete',freeze);
 		}

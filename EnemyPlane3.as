@@ -7,7 +7,7 @@ package  {
 
 	public class EnemyPlane3 extends EnemyPlane{
 		private var timeOutId:uint;
-		private var fireTimeOutId:uint;
+		
 		private var that:EnemyPlane3;
 		private	var mustCombArr:Array = [EnemyBullet3, EnemyBullet3, EnemyBullet3, EnemyBullet3, EnemyBullet3];
 		public function EnemyPlane3(posX:Number, posY:Number,moveArea:MoveArea=null,speed:Number=3) {
@@ -18,6 +18,11 @@ package  {
 			this.moveWay = new LineMove(this,[6], [this.speed], [{x:960, y:150}])
 			fireTimeOutId = setInterval(fireThreeBullet, 400, mustCombArr.concat());
 
+		}
+
+		public function myReBorn(posX:Number, posY:Number) {
+			reBorn(posX, posY);
+			fireTimeOutId = setInterval(fireThreeBullet, 400, mustCombArr.concat());
 		}
 
 		private function fireThreeBullet(bulletComb:Array) {
@@ -39,11 +44,11 @@ package  {
 					threeBulletArr[4].born(this.x +40, this.y + this.height  - 40);
 					
 					
-					stage.addChild(threeBulletArr[0]);
-					stage.addChild(threeBulletArr[1]);
-					stage.addChild(threeBulletArr[2]);
-					stage.addChild(threeBulletArr[3]);
-					stage.addChild(threeBulletArr[4]);
+					GameItem.stage.addChild(threeBulletArr[0]);
+					GameItem.stage.addChild(threeBulletArr[1]);
+					GameItem.stage.addChild(threeBulletArr[2]);
+					GameItem.stage.addChild(threeBulletArr[3]);
+					GameItem.stage.addChild(threeBulletArr[4]);
 			
 					return;
 				}
@@ -69,28 +74,16 @@ package  {
 
 			bulletArr.push(b1,b2,b3,b4,b5);
 			
-			stage.addChild(b1);
-			stage.addChild(b2);
-			stage.addChild(b3);
-			stage.addChild(b4);
-			stage.addChild(b5);
+			GameItem.stage.addChild(b1);
+			GameItem.stage.addChild(b2);
+			GameItem.stage.addChild(b3);
+			GameItem.stage.addChild(b4);
+			GameItem.stage.addChild(b5);
 		}
 
-		override protected function fire(bulletType:*) {
-			var bullet:EnemyBullet1;
-			for(var i:int=0; i<bulletArr.length; i++){
-				if(bulletArr[i].isFreeze && (bulletArr[i] is bulletType)){
-					bulletArr[i].born(this.x, this.y + this.height - 20);
-					return;
-				}
-			}
-			
-			bullet = new bulletType(this.moveArea, this.x, this.y + this.height  - 20, 8);
-			bulletArr.push(bullet);
-			stage.addChild(bullet);
-		}
+	
 
-		override protected function freeze(evt:Event) {
+		override protected function freeze(evt:Event=null) {
 			// 静止
 			this.removeEventListener('MoveComplete',freeze);
 		}

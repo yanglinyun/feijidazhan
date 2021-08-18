@@ -5,7 +5,7 @@
 	
 	public class Plane extends MoveGameItem implements IMoveItemConflict{
 		
-		protected var totalLife:Number;
+		public var totalLife:Number;
 		public var curLife:Number;
 		protected var bulletTypeArr:Array;
 		public var bulletArr:Array = []; // 飞机子弹对象池
@@ -30,7 +30,9 @@
 			
 		}
 		
-		public function hit(target:*){};
+		public function hit(target:*):Boolean{
+			return false;
+		};
 		public function destory(){};
 
 

@@ -12,7 +12,7 @@
 			this.moveWay = new LineMove(this,[2], [this.speed], [{x:0, y:-1200}]);
 		}
 		
-		override protected function freeze(evt:Event)
+		override protected function freeze(evt:Event=null)
 		{
 			// 背景循环滚动 
 			// 其本轮运动完成 触发冷冻方法是重置 

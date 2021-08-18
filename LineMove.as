@@ -50,7 +50,7 @@
 					artResY +=  this.curFrameSpeed;
 					break;
 				case 6.5 :
-					trace("123" + 6.5);
+					
 					artResY +=  this.curFrameSpeed * Math.cos(45/2 * Math.PI / 180);
 					artResX +=  this.curFrameSpeed * Math.sin(45/2 * Math.PI / 180);
 					break;

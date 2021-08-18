@@ -38,10 +38,10 @@
 			this.moveWay.update();
 		}
 		
-		protected function freeze(evt:Event) {
+		protected function freeze(evt:Event=null) {
 			this.isFreeze = true;
 			trace("freeze" + this);
-			stage.removeChild(this);
+			GameItem.stage.removeChild(this);
 			this.removeEventListener('MoveComplete',freeze);
 		}
 
