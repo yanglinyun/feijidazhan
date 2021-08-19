@@ -1,0 +1,81 @@
+Date : 2021-08-19 21:44:23
+Directory : c:\Users\yanglingyun\Desktop\feiji_dazhan
+Total : 53 files,  1785 codes, 139 comments, 578 blanks, all 2502 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| ActionScript 3 |         45 |      1,504 |        131 |        575 |      2,210 |
+| XML            |          5 |        191 |          0 |          0 |        191 |
+| HTML           |          2 |         90 |          8 |          2 |        100 |
+| Markdown       |          1 |          0 |          0 |          1 |          1 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                             | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                |         53 |      1,785 |        139 |        578 |      2,502 |
+| .idea                                                            |          5 |        191 |          0 |          0 |        191 |
++------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                         | language       | code       | comment    | blank      | total      |
++------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\.idea\feiji_dazhan.iml | XML            |          9 |          0 |          0 |          9 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\.idea\misc.xml         | XML            |          6 |          0 |          0 |          6 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\.idea\modules.xml      | XML            |          8 |          0 |          0 |          8 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\.idea\vcs.xml          | XML            |          6 |          0 |          0 |          6 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\.idea\workspace.xml    | XML            |        162 |          0 |          0 |        162 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\Background.as          | ActionScript 3 |         14 |          3 |          5 |         22 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\BossEffect.as          | ActionScript 3 |          7 |          1 |          5 |         13 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\Bullet.as              | ActionScript 3 |         41 |          4 |         21 |         66 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\Effect.as              | ActionScript 3 |         15 |          1 |          8 |         24 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\EnemyBase.as           | ActionScript 3 |          8 |          0 |          7 |         15 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\EnemyBullet.as         | ActionScript 3 |          8 |          0 |          6 |         14 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\EnemyBullet1.as        | ActionScript 3 |          9 |          0 |          4 |         13 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\EnemyBullet2.as        | ActionScript 3 |         13 |          0 |          5 |         18 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\EnemyBullet3.as        | ActionScript 3 |         13 |          1 |          6 |         20 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\EnemyBullet4.as        | ActionScript 3 |         13 |          1 |          6 |         20 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\EnemyBullet6.as        | ActionScript 3 |         17 |          1 |          8 |         26 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\EnemyBullet7.as        | ActionScript 3 |         13 |          0 |          5 |         18 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\EnemyPlane.as          | ActionScript 3 |         71 |          5 |         25 |        101 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\EnemyPlane1.as         | ActionScript 3 |         42 |          1 |         19 |         62 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\EnemyPlane2.as         | ActionScript 3 |         49 |          5 |         24 |         78 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\EnemyPlane3.as         | ActionScript 3 |         60 |          5 |         27 |         92 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\EnemyPlane4.as         | ActionScript 3 |         76 |          5 |         26 |        107 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\EnemyPlane6.as         | ActionScript 3 |         78 |          5 |         31 |        114 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\FPSShow.as             | ActionScript 3 |         30 |          4 |          9 |         43 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\Formation.as           | ActionScript 3 |         11 |          0 |          5 |         16 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\GameItem.as            | ActionScript 3 |         16 |          2 |          7 |         25 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\IMoveItemConflict.as   | ActionScript 3 |          6 |          0 |          5 |         11 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\JiGunagEffect.as       | ActionScript 3 |          7 |          0 |          5 |         12 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\KeyBoradController.as  | ActionScript 3 |         39 |          1 |         14 |         54 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\Level.as               | ActionScript 3 |         34 |         31 |         12 |         77 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\LevelRow.as            | ActionScript 3 |         46 |          3 |         11 |         60 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\LifeEffect.as          | ActionScript 3 |          7 |          0 |          5 |         12 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\LineMove.as            | ActionScript 3 |         77 |          3 |         27 |        107 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\MagaEffect.as          | ActionScript 3 |          7 |          0 |          6 |         13 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\Main.as                | ActionScript 3 |        100 |         11 |         25 |        136 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\MissleBullet.as        | ActionScript 3 |         10 |          0 |          7 |         17 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\MoneyEffect.as         | ActionScript 3 |          7 |          0 |          6 |         13 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\Move.as                | ActionScript 3 |         25 |          2 |          8 |         35 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\MoveArea.as            | ActionScript 3 |         20 |          0 |          8 |         28 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\MoveGameItem.as        | ActionScript 3 |         38 |          2 |         11 |         51 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\MyBullet.as            | ActionScript 3 |          8 |          0 |          7 |         15 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\MyPlane.as             | ActionScript 3 |        175 |         29 |         52 |        256 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\Panel.as               | ActionScript 3 |         52 |          1 |         15 |         68 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\Plane.as               | ActionScript 3 |         28 |          1 |         17 |         46 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\Prop.as                | ActionScript 3 |        152 |          2 |         43 |        197 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\README.md              | Markdown       |          0 |          0 |          1 |          1 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\StaticGameItem.as      | ActionScript 3 |          7 |          1 |          5 |         13 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\StaticMove.as          | ActionScript 3 |         15 |          0 |          6 |         21 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\ThreeBullet.as         | ActionScript 3 |         11 |          0 |          6 |         17 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\TwoBullet.as           | ActionScript 3 |         11 |          0 |          7 |         18 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\test.as                | ActionScript 3 |         18 |          0 |          8 |         26 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\test.html              | HTML           |         45 |          4 |          1 |         50 |
+| c:\Users\yanglingyun\Desktop\feiji_dazhan\未命名-1.html             | HTML           |         45 |          4 |          1 |         50 |
+| Total                                                            |                |      1,785 |        139 |        578 |      2,502 |
++------------------------------------------------------------------+----------------+------------+------------+------------+------------+

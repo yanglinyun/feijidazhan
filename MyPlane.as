@@ -227,6 +227,16 @@
             // 更新飞机位置
             this.x = nextPosX
             this.y = nextPosY
+            // 如果存在跟踪到导弹
+            var enemyBullet7Arr:Array = EnemyPlane6.getCurAllEnemyBullet7();
+             
+            for(var j:Number = 0; j < enemyBullet7Arr.length; j++){
+                if(enemyBullet7Arr[j].y< this.y){
+                   trace(enemyBullet7Arr.length)
+                    // enemyBullet7Arr[j].moveWay.curDirection = getTwoPointDirection(enemyBullet7Arr[j], this); // 道具->飞机
+                    // enemyBullet7Arr[j].moveWay.curFrameSpeed = 10;
+                }
+            }
             for (var i:Number = 1; i <= this.curEffect.length - 1; i++) {
                 if (this.curEffect[i] > 0) {
                     if (i >= 3) {
