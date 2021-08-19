@@ -1,11 +1,11 @@
-﻿package  {
-	
-	public class LifeEffect extends Effect {
-		
-		
-		public function LifeEffect() {
-			super(0,0)
-		}
-	}
-	
+﻿package {
+
+    public class LifeEffect extends Effect {
+
+
+        public function LifeEffect() {
+            super(0, 0)
+        }
+    }
+
 }

@@ -1,10 +1,10 @@
-﻿package  {
-	
-	public interface IMoveItemConflict {
+﻿package {
 
-		 function hit(Object:*):Boolean;
-		 function destory();
+    public interface IMoveItemConflict {
 
-	}
-	
+        function hit(Object:*):Boolean;
+        function destory();
+
+    }
+
 }
