@@ -11,11 +11,16 @@
             super(_moveArea, posX, posY, speed, width, height, rotation);
             this.addEventListener('MoveComplete', freeze);
         }
+        // 打中中部位置 双倍伤害
+        public function isHitMiddle(target:*):Boolean {
+            
+           // 敌机头部中间左右 target.width/4 像素为中部
+            return (target.x +  target.width/4 >=  this.x) && (target.x -  target.width/4 <=  this.x);
+        }
 
         public function hit(target:*):Boolean {
             if (this.hitTestObject(target)) {
-
-                target.bang(this.force);
+                target.bang(this.force * (isHitMiddle(target)?2:1));
                 this.isFreeze = true;
                 if (GameItem.stage.contains(this)) {
                     GameItem.stage.removeChild(this);

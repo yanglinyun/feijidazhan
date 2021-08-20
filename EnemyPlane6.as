@@ -19,14 +19,14 @@ package {
             this.curLife = this.totalLife = 5000;
             this.moveWay = new StaticMove(this);
 			fireThreeBullet(mustCombArr.concat());
-            fireTimeOutId = setInterval(fireThreeBullet, 15000, mustCombArr.concat());
+            fireTimeOutId = setInterval(fireThreeBullet, 5000, mustCombArr.concat());
 			
         }
 
         public function myReBorn(posX:Number, posY:Number) {
             reBorn(posX, posY);
 			fireThreeBullet(mustCombArr.concat());
-            fireTimeOutId = setInterval(fireThreeBullet, 15000, mustCombArr.concat());
+            fireTimeOutId = setInterval(fireThreeBullet, 5000, mustCombArr.concat());
         }
         
          public static function getCurAllEnemyBullet7():Array {
@@ -106,7 +106,7 @@ package {
 
                 GameItem.stage.addChild(leftBullet);
                 GameItem.stage.addChild(rightBullet);
-            }, 7000);
+            }, 3000);
 
         }
 

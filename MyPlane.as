@@ -22,14 +22,14 @@
 
         public function MyPlane() {
 
-            this._moveArea = new MoveArea(GameItem.ScreenWidth, MoveGameItem.panel.width - 50, GameItem.ScreenHeight, 200)
+            this._moveArea = new MoveArea(GameItem.ScreenWidth, MoveGameItem.panel.width - 50, GameItem.ScreenHeight, 225)
             super(this._moveArea, 0, 0, _speed);
             //bulletTypeArr.push(MyBullet1);
             // 居中显示
             midDisplay();
 
             this.gotoAndStop(1); // 正常状态
-            this.totalLife = this.curLife = 800; // 血量
+            this.totalLife = this.curLife = 8000; // 血量
             panel.updateInfo(this.curLife, this.totalLife)
 
             setInterval(fireThreeBullet, 400, [TwoBullet, ThreeBullet, ThreeBullet]);
