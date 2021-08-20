@@ -47,7 +47,7 @@ package {
             clearInterval(fireTimeOutId);
            
             this.isFreeze = true;
-             trace(this.isFreeze)
+          
             if (GameItem.stage.contains(this)) {
                 
                  

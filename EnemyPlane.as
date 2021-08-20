@@ -43,8 +43,15 @@
             if (this.curLife <= 0) {
                 this.gotoAndStop(3);
 
+                
 
                 panel.updateScore(that.totalLife * MyPlane.isDoubleScore);
+                // boss死亡游戏结束
+                if(this.curLife<=0 && this is EnemyPlane6){
+                     EnemyPlane6.gameOver();
+                     Level.gameOver();
+                    return;
+                }
                 dieTimeOutId = setTimeout(function() {
                     clearTimeout(dieTimeOutId);
 

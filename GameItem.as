@@ -6,6 +6,7 @@
         public static var stage:Stage;
         public static var ScreenHeight:Number;
         public static var ScreenWidth:Number;
+        public static var keyBoradController:KeyBoradController;
 
         public function GameItem(posX:Number = 0, posY:Number = 0, width:Number = 0, height:Number = 0, rotation:Number = 0) {
             // 默认元件(x,y)=0 对齐 左上角

@@ -16,12 +16,14 @@
                     if(Level.stageNoAnyEnemyPlane() && (row[0]==-1?Level.bossEffectComplete:true)){// 并且boss出厂动画完毕才开始检测当前光卡是否完毕
                         clearInterval(stageNoAnyEnemyPlaneId);
                         Level.canContinue = true;
-                        trace("恢复继续")
+                       
                     }
                 },1000);//1s 检测一次
                 row.pop();
             }else if(row[row.length-1]==-405){// 当前关卡飞机不必全部消灭 剧情人继续
+            
                  Level.canContinue = true;
+                 Level.bossEffectComplete = true;
                  row.pop();
             }
 

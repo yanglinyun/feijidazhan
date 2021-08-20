@@ -29,10 +29,10 @@
             midDisplay();
 
             this.gotoAndStop(1); // 正常状态
-            this.totalLife = this.curLife = 8000; // 血量
+            this.totalLife = this.curLife = 5000; // 血量
             panel.updateInfo(this.curLife, this.totalLife)
 
-            setInterval(fireThreeBullet, 400, [TwoBullet, ThreeBullet, ThreeBullet]);
+            fireThrottleTimeId =setInterval(fireThreeBullet, 400, [TwoBullet, ThreeBullet, ThreeBullet]);
 
             that = this;
             // 加载特效
@@ -80,9 +80,9 @@
                 threeBulletArr[0].born(this.x + this.width / 2, this.y);
                 threeBulletArr[1].born(this.x + this.width / 2 - 30, this.y + 20);
                 threeBulletArr[2].born(this.x + this.width / 2 + 30, this.y + 20);
-                stage.addChild(threeBulletArr[0]);
-                stage.addChild(threeBulletArr[1]);
-                stage.addChild(threeBulletArr[2]);
+                GameItem.stage.addChild(threeBulletArr[0]);
+                GameItem.stage.addChild(threeBulletArr[1]);
+                GameItem.stage.addChild(threeBulletArr[2]);
                 return;
             }
 
@@ -97,9 +97,9 @@
             bulletArr.push(rightThreeBullet);
 
 
-            stage.addChild(twoBullet);
-            stage.addChild(leftThreeBullet);
-            stage.addChild(rightThreeBullet);
+            GameItem.stage.addChild(twoBullet);
+            GameItem.stage.addChild(leftThreeBullet);
+            GameItem.stage.addChild(rightThreeBullet);
         }
 
         override protected function fire(bulletType:*) {
@@ -117,7 +117,7 @@
             bullet = new bulletType(this.x + this.width / 2, this.y);
 
             bulletArr.push(bullet);
-            stage.addChild(bullet);
+            GameItem.stage.addChild(bullet);
 
         }
 
@@ -148,10 +148,28 @@
                     that.gotoAndStop(1);
                 }, 500)
             }
+            // 玩家死亡游戏结束
+            if(this.curLife<=0){
+
+                Level.gameOver();
+                 return;
+            }
             panel.updateInfo(this.curLife, this.totalLife)
         }
-
-
+        // 料理后事
+        public function gameOver(){
+            GameItem.keyBoradController.clearKeyUpDown();
+            if(GameItem.stage.contains(this)) {
+                GameItem.stage.removeChild(this);
+            }
+            clearInterval(fireThrottleTimeId);
+            for(var i:int; i<this.bulletArr.length; i++){
+                if(GameItem.stage.contains(this.bulletArr[i])) {
+                    GameItem.stage.removeChild(this.bulletArr[i]);
+                }
+               
+            }
+        }
         public function KeyDownHandler(e:KeyboardEvent) {
             keyObj[e.keyCode] = true;
 

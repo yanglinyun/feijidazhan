@@ -7,8 +7,8 @@
 
     public class KeyBoradController {
         private var stage:Stage = GameItem.stage;
-        private var keyDownArr:Array = [];
-        private var keyUpArr:Array = [];
+        public static var keyDownArr:Array = [];
+        public static var keyUpArr:Array = [];
 
         public function KeyBoradController() {
             //trace(stage.stageWidth);
@@ -16,16 +16,22 @@
         }
 
         public function addKeyDown(obj:MovieClip):void {
-            this.keyDownArr.push(obj);
+            keyDownArr.push(obj);
         }
 
         public function addKeyUpDown(obj:MovieClip):void {
-            this.keyDownArr.push(obj);
-            this.keyUpArr.push(obj);
+            keyDownArr.push(obj);
+            keyUpArr.push(obj);
         }
 
+        public function clearKeyUpDown():void {
+           keyDownArr = [];
+           keyUpArr = [];
+        }
+
+
         public function addKeyUp(obj:MovieClip):void {
-            this.keyUpArr.push(obj);
+            keyUpArr.push(obj);
         }
 
         private function keyTwo() {
@@ -36,15 +42,15 @@
 
         private function KeyDownHandler(evt:KeyboardEvent) {
 
-            for (var i:int = 0; i < this.keyDownArr.length; i++) {
-                this.keyDownArr[i].KeyDownHandler(evt);
+            for (var i:int = 0; i < keyDownArr.length; i++) {
+               keyDownArr[i].KeyDownHandler(evt);
             }
 
         }
 
         private function KeyUpHandler(evt:KeyboardEvent) {
-            for (var i:int = 0; i < this.keyUpArr.length; i++) {
-                this.keyDownArr[i].KeyUpHandler(evt);
+            for (var i:int = 0; i < keyUpArr.length; i++) {
+                keyDownArr[i].KeyUpHandler(evt);
             }
 
         }

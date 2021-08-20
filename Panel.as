@@ -8,16 +8,17 @@
 
         private var missleArr:Array = new Array(8);
         public static var useMissle:Boolean = false;
-        public static var score:Number = 0;
+        public static var scoreCount:Number = 0;
         public static var enemyPlaneCount:Number = 0;
         public function Panel(posX:Number, posY:Number, width:Number = 0, height:Number = 0, rotation:Number = 0) {
             super(posX, posY, width, height, rotation);
+           
             //this.addEventListener("PlaneLifeChange", updateInfo);
             initMissleArr();
         }
-
+        
         private function initMissleArr():void {
-
+             ((getChildByName("lifeBar") as MovieClip).getChildByName("mc") as MovieClip).gotoAndStop(100);
             var missleArea:MovieClip = (getChildByName("missleArea") as MovieClip)
             for (var i:int = 0; i < missleArr.length; i++) {
                 var curMissle:MovieClip = (((missleArea.getChildByName("m" + i) as MovieClip)).getChildByName("state") as MovieClip);
@@ -33,7 +34,7 @@
                 if (missleArr[i].isValid) {
                     useMissle = true;
                     coolMissle(missleArr[i])
-                    trace("可用key " + i);
+                 
                     return true;
                 }
             }
@@ -43,7 +44,7 @@
         public function coolMissle(beCooled:MovieClip) {
             beCooled.isValid = false;
             beCooled.gotoAndPlay(1);
-            trace("space")
+          
             beCooled.addFrameScript(beCooled.totalFrames - 1, function() {
                 beCooled.isValid = true;
                 beCooled.stop();
@@ -59,8 +60,8 @@
 
         public function updateScore(addScore:Number) {
             var textField1:TextField = TextField(getChildByName("score"));
-            score = parseInt(textField1.text) + addScore;
-            textField1.text = ( score+ "");
+            scoreCount = parseInt(textField1.text) + addScore;
+            textField1.text = ( scoreCount+ "");
             enemyPlaneCount++;
 
         }

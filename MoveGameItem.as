@@ -37,7 +37,7 @@
 
         protected function freeze(evt:Event = null) {
             this.isFreeze = true;
-            trace("freeze" + this);
+          
             if (GameItem.stage.contains(this)) {
                 GameItem.stage.removeChild(this);
             }

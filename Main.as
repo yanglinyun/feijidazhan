@@ -11,8 +11,8 @@
 		private var ScreenHight:Number;
 
 		private var background:Background;
-		private var panel:Panel = new Panel(0,0);
-		private var myPlaneMoveArea:Object = {x:{max:ScreenWidth,min:panel.width - 50,scale:ScreenWidth - panel.width + 50},y:{max:ScreenHight,min:200,scale:ScreenHight - 200}};
+		private var panel:Panel;
+		private var myPlaneMoveArea:Object;
 		private var myPlane:MyPlane;
 		private var level:Level;
 		private var keyBoradController:KeyBoradController;
@@ -24,14 +24,23 @@
 
 		public function Main()
 		{
+                
 			ScreenWidth = stage.stageWidth;
 			ScreenHight = stage.stageHeight;
 			fp = new FPSShow();
 			GameItem.stage = stage;
-			MoveGameItem.panel = panel;
-			GameItem.ScreenHeight = stage.stageHeight;
+            GameItem.ScreenHeight = stage.stageHeight;
 			GameItem.ScreenWidth = stage.stageWidth;
+
+            panel = new Panel(0,0);
+            
+			MoveGameItem.panel = panel;
+			
+            myPlaneMoveArea = {x:{max:ScreenWidth,min:panel.width - 50,scale:ScreenWidth - panel.width + 50},y:{max:ScreenHight,min:200,scale:ScreenHight - 200}};
+            
+
 			keyBoradController = new KeyBoradController();
+			GameItem.keyBoradController = keyBoradController;
 
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
@@ -59,7 +68,7 @@
 			// 我方飞机注册
 			myPlane = new MyPlane();
 			keyBoradController.addKeyUpDown(myPlane);
-			addChild(myPlane);
+			GameItem.stage.addChild(myPlane);
 			Level.moveItemList.push(myPlane);
 			// 加载关卡;
 			level = new Level();
@@ -74,7 +83,10 @@
 		private function updateMoveItems():void
 		{
 			// 更新运动物件
-
+            if(Level.isGameOver){
+                this.removeEventListener(Event.ENTER_FRAME, onEnterframe);
+                return;
+            }
 			for (var i:int = 0; i < Level.moveItemList.length; i++)
 			{
 

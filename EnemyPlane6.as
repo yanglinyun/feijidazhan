@@ -11,22 +11,24 @@ package {
         private var that:EnemyPlane6;
         private var mustCombArr:Array = [EnemyBullet6, EnemyBullet7, EnemyBullet7];
         public static var moveItemList:Array = [];
-        
+        private static var genzhongMissleTimeOutId:uint;
+        private static var jiguang:EnemyBullet6;// 激光
+        private static var fireTimeOutId_s;
         public function EnemyPlane6(posX:Number = 0, posY:Number = 0, moveArea:MoveArea = null, speed:Number = 3) {
             that = this;
             super(posX, posY, moveArea, speed);
             (((getChildByName("lifeBar") as MovieClip).getChildByName("lifeBar") as MovieClip)).gotoAndStop(0)
-            this.curLife = this.totalLife = 1000;
+            this.curLife = this.totalLife = 2500;
             this.moveWay = new StaticMove(this);
 			fireThreeBullet(mustCombArr.concat());
-            fireTimeOutId = setInterval(fireThreeBullet, 5000, mustCombArr.concat());
+            fireTimeOutId_s = setInterval(fireThreeBullet, 5000, mustCombArr.concat());
 			
         }
 
         public function myReBorn(posX:Number, posY:Number) {
             reBorn(posX, posY);
 			fireThreeBullet(mustCombArr.concat());
-            fireTimeOutId = setInterval(fireThreeBullet, 5000, mustCombArr.concat());
+            fireTimeOutId_s = setInterval(fireThreeBullet, 5000, mustCombArr.concat());
         }
         
          public static function getCurAllEnemyBullet7():Array {
@@ -39,7 +41,7 @@ package {
             var bullet:*;
             var _mustCombArr:Array = [EnemyBullet6, EnemyBullet7, EnemyBullet7];
             var threeBulletArr:Array = [];
-			var jiguang:EnemyBullet6;
+			
             //trace("============================");
             //7秒激光 8秒跟踪
             var isExistFreezeEnemyBullet6:Boolean = false;
@@ -65,7 +67,7 @@ package {
             isExistFreezeEnemyBullet6 = false;
             _mustCombArr.shift();
             // 跟踪导弹
-            var genzhongMissleTimeOutId:uint;
+          
             genzhongMissleTimeOutId = setTimeout(function() {
                 clearTimeout(genzhongMissleTimeOutId);
 				
@@ -110,7 +112,19 @@ package {
 
         }
 
-
+        // 老王完蛋
+        public static function gameOver(){
+            clearTimeout(genzhongMissleTimeOutId);
+            clearInterval(fireTimeOutId_s);
+            
+            
+            // 激光完蛋
+            jiguang.isFreeze = true;
+            // if (GameItem.stage.contains(jiguang)) {
+            //     GameItem.stage.removeChild(jiguang);
+            // }
+           
+        }
         override protected function freeze(evt:Event = null) {
             // 静止
             this.removeEventListener('MoveComplete', freeze);

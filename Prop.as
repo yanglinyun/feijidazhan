@@ -17,7 +17,7 @@
             this._moveArea = new MoveArea(GameItem.ScreenWidth, MoveGameItem.panel.width - 50, GameItem.ScreenHeight, 0)
             super(moveArea, posX, posY, speed, width, height, rotation);
             that = this;
-            type = Math.ceil(Math.random() * 2) + 2;
+            type = Math.ceil(Math.random() * 4);
 
             buff();
             timeOutIdArr = new Array(5);
