@@ -13,7 +13,7 @@
             that = this;
             super(posX, posY, moveArea, speed);
             (((getChildByName("lifeBar") as MovieClip).getChildByName("lifeBar") as MovieClip)).gotoAndStop(0)
-            this.curLife = this.totalLife = 2500;
+            this.curLife = this.totalLife = 500;
             this.moveWay = new LineMove(this, [6], [0], [{x: 960, y: this.moveArea.yMax + this.height}])
             fireTimeOutId = setInterval(fire, 400, EnemyBullet7);
 

@@ -29,8 +29,9 @@
             this.gotoAndStop(1);
             this.curLife = this.totalLife;
             this.isFreeze = false;
-            that.visible = true;
+            this.visible = true;
             GameItem.stage.addChild(this);
+             this.addEventListener('MoveComplete', freeze);
         }
 
         override public function bang(force:Number) {

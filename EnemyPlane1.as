@@ -45,9 +45,12 @@ package {
             // 静止
             this.removeEventListener('MoveComplete', freeze);
             clearInterval(fireTimeOutId);
-
+           
             this.isFreeze = true;
+             trace(this.isFreeze)
             if (GameItem.stage.contains(this)) {
+                
+                 
                 GameItem.stage.removeChild(this);
             }
 

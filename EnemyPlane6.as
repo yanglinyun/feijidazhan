@@ -16,7 +16,7 @@ package {
             that = this;
             super(posX, posY, moveArea, speed);
             (((getChildByName("lifeBar") as MovieClip).getChildByName("lifeBar") as MovieClip)).gotoAndStop(0)
-            this.curLife = this.totalLife = 5000;
+            this.curLife = this.totalLife = 1000;
             this.moveWay = new StaticMove(this);
 			fireThreeBullet(mustCombArr.concat());
             fireTimeOutId = setInterval(fireThreeBullet, 5000, mustCombArr.concat());
