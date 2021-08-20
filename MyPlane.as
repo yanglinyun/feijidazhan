@@ -232,9 +232,10 @@
              
             for(var j:Number = 0; j < enemyBullet7Arr.length; j++){
                 if(enemyBullet7Arr[j].y< this.y){
-                   trace(enemyBullet7Arr.length)
-                    // enemyBullet7Arr[j].moveWay.curDirection = getTwoPointDirection(enemyBullet7Arr[j], this); // 道具->飞机
-                    // enemyBullet7Arr[j].moveWay.curFrameSpeed = 10;
+                    
+                    enemyBullet7Arr[j].moveWay.curDirection = getTwoPointDirection(enemyBullet7Arr[j], this); // 道具->飞机
+                    enemyBullet7Arr[j].rotation = enemyBullet7Arr[j].moveWay.curDirection * 45;
+                    enemyBullet7Arr[j].moveWay.curFrameSpeed = 10;
                 }
             }
             for (var i:Number = 1; i <= this.curEffect.length - 1; i++) {

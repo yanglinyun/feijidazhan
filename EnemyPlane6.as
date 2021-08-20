@@ -16,7 +16,7 @@ package {
             that = this;
             super(posX, posY, moveArea, speed);
             (((getChildByName("lifeBar") as MovieClip).getChildByName("lifeBar") as MovieClip)).gotoAndStop(0)
-            this.curLife = this.totalLife = 400;
+            this.curLife = this.totalLife = 5000;
             this.moveWay = new StaticMove(this);
 			fireThreeBullet(mustCombArr.concat());
             fireTimeOutId = setInterval(fireThreeBullet, 15000, mustCombArr.concat());
@@ -56,6 +56,7 @@ package {
             if (!isExistFreezeEnemyBullet6) {
                 jiguang = new EnemyBullet6(this.x , this.y + this.height / 2 - 50);
                 moveItemList.push(jiguang);
+                bulletArr.push(jiguang);
                 GameItem.stage.addChild(jiguang);
 				jiguang.gotoAndPlay(1)
 			
@@ -99,7 +100,9 @@ package {
 
 
                 moveItemList.push(leftBullet);
+                bulletArr.push(leftBullet);
                 moveItemList.push(rightBullet);
+                bulletArr.push(rightBullet);
 
                 GameItem.stage.addChild(leftBullet);
                 GameItem.stage.addChild(rightBullet);

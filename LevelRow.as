@@ -37,6 +37,8 @@
                
                 return;
             }
+
+            
             for (var i:int = 0; i < row.length; i++) {
                 // // 添加敌机
                 if (row[i] == 0) {

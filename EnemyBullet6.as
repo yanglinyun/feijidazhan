@@ -10,8 +10,9 @@
         }
 
 		override public function hit(target:*):Boolean {
+            
             if (this.hitTestObject(target)) {
-
+                
                 target.bang(this.force);
                
                 //trace(GameItem.stage);
