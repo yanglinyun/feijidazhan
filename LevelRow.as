@@ -26,13 +26,29 @@
                     for (var j:int = 0; j < Level.moveItemList.length; j++) {
                         if (Level.moveItemList[j].isFreeze && (Level.moveItemList[j] is EnemyPlane6)) {
                             Level.moveItemList[j].myReBorn(10 + baseX + 250, 110);
-
-                            continue;
+                            break;
                         }
                     }
 
                     var enemyPlane:* = new EnemyPlane6(10 + baseX + 250, 110);
                     Level.moveItemList.push(enemyPlane); // x = 960 屏幕宽度 防止提前碰边界
+
+                    // 替换real 小boss
+                    var EnemyPlane7Arr:Array = [EnemyPlane7, EnemyPlane7];
+                    for (var j2:int = 0; j2 < Level.moveItemList.length; j2++) {
+                        if(EnemyPlane7Arr.length==0){
+                            break;
+                        }
+                        if (Level.moveItemList[j2].isFreeze && (Level.moveItemList[j2] is EnemyPlane7)) {
+                            Level.moveItemList[j2].myReBorn(10 + baseX + 250, 110);
+                            EnemyPlane7Arr.shift();
+                        }
+                    }
+
+                    var enemyPlane71:EnemyPlane7 = new EnemyPlane7(enemyPlane.x - 230, enemyPlane.y + 80);
+                    Level.moveItemList.push(enemyPlane71); // x = 960 屏幕宽度 防止提前碰边界
+                    var enemyPlane72:EnemyPlane7 = new EnemyPlane7(enemyPlane.x + 230, enemyPlane.y + 80);
+                    Level.moveItemList.push(enemyPlane72); // x = 960 屏幕宽度 防止提前碰边界
                 });
                
                 return;
