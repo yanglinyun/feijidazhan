@@ -8,7 +8,8 @@
 
         private var missleArr:Array = new Array(8);
         public static var useMissle:Boolean = false;
-
+        public static var score:Number = 0;
+        public static var enemyPlaneCount:Number = 0;
         public function Panel(posX:Number, posY:Number, width:Number = 0, height:Number = 0, rotation:Number = 0) {
             super(posX, posY, width, height, rotation);
             //this.addEventListener("PlaneLifeChange", updateInfo);
@@ -58,8 +59,9 @@
 
         public function updateScore(addScore:Number) {
             var textField1:TextField = TextField(getChildByName("score"));
-            textField1.text = (parseInt(textField1.text) + addScore + "");
-
+            score = parseInt(textField1.text) + addScore;
+            textField1.text = ( score+ "");
+            enemyPlaneCount++;
 
         }
     }
