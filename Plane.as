@@ -24,6 +24,19 @@
 
         }
 
+        protected function reBorn(posX:Number=0, posY:Number=0) {
+            (((getChildByName("lifeBar") as MovieClip).getChildByName("lifeBar") as MovieClip)).gotoAndStop(0)
+            this.x = posX;
+            this.y = posY;
+            //trace("randomBorn");
+            this.gotoAndStop(1);
+            this.curLife = this.totalLife;
+            this.isFreeze = false;
+            this.visible = true;
+            GameItem.stage.addChild(this);
+             this.addEventListener('MoveComplete', freeze);
+        }
+
         public function bang(force:Number) {
 
         }

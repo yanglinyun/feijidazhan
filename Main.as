@@ -159,7 +159,7 @@
 			// 更新运动物件
 			if (Level.isGameOver)
 			{
-				this.removeEventListener(Event.ENTER_FRAME, onEnterframe);
+				
 				return;
 			}
 			for (var i:int = 0; i < Level.moveItemList.length; i++)

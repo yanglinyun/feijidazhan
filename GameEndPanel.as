@@ -3,18 +3,28 @@
 
 	public class GameEndPanel extends StaticGameItem {
 		
-		
+		public static var singleInstance:GameEndPanel = null;
 		public function GameEndPanel() {
-			// 居中显示
 			super(GameItem.ScreenWidth/2 - this.width / 2 + 200,GameItem.ScreenHeight/2 - this.height / 2);
-			if(Level.stageHasBoss()){
-				EnemyPlane6.gameOver();
+		}
+
+		public static function getInstance():GameEndPanel {
+			if(!singleInstance){
+				singleInstance = new GameEndPanel();
 			}
-			var score:TextField = TextField(getChildByName("score"));
+			singleInstance.init();// 初始化
+			return singleInstance;
+		}
+		
+
+		private function init() {
+			// 居中显示
+			var score:TextField = TextField(singleInstance.getChildByName("score"));
 			score.text = (Panel.scoreCount + "");
-			var enemyPlaneCount:TextField = TextField(getChildByName("enemyPlaneCount"));
+			var enemyPlaneCount:TextField = TextField(singleInstance.getChildByName("enemyPlaneCount"));
 			enemyPlaneCount.text = (Panel.enemyPlaneCount + "");
-			GameItem.stage.addChild(this)
+			trace(singleInstance);
+			GameItem.stage.addChild(singleInstance)
 		}
 	}
 	

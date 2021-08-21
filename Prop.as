@@ -27,9 +27,9 @@
         }
 
         public static function clearAllTimeOut(){
-            // for(var i:int=0; i<Prop.timeOutIdArr.length; i++){
-            //     clearTimeout(Prop.timeOutIdArr[i]);
-            // }
+            for(var i:int=0; i<Prop.timeOutIdArr.length; i++){
+                clearTimeout(Prop.timeOutIdArr[i]);
+            }
         }
         
         public function buff() {
@@ -117,7 +117,7 @@
                     }
 
                 }
-            }, 5000)
+            }, 2000)
         }
 
         private function jiguang() {
@@ -131,7 +131,7 @@
 
                 rc(that.myPlane.effectArr[3])
                 
-            }, 5000)
+            }, 2000)
         }
 
         private function money() {
@@ -147,7 +147,7 @@
                 MyPlane.isDoubleScore = 1;
                 rc(that.myPlane.effectArr[2])
               
-            }, 5000)
+            }, 2000)
         }
 
         private function life() {
@@ -160,7 +160,7 @@
                 timeOutIdArr[1] = 0;
                 rc(that.myPlane.effectArr[1])
                 
-            }, 5000)
+            }, 2000)
             this.myPlane.addLife(200);
         }
 
@@ -177,6 +177,16 @@
 
             var prop:* = new Prop(posX, posY);
             Level.moveItemList.push(prop);
+        }
+
+        public static function clearAllProp() {
+            for (var j:int = 0; j < Level.moveItemList.length; j++) {
+                if (Level.moveItemList[j] is Prop) {
+                    Level.moveItemList[j].x = -1000;
+                    Level.moveItemList[j].isFreeze = true;
+                    
+                }
+            }
         }
 
         public function hit(target:*):Boolean {

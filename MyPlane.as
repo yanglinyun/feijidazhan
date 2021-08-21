@@ -5,7 +5,8 @@
     import flash.display.BitmapData;
     import flash.display.Bitmap;
     import flash.utils.*;
-
+	import flash.display.MovieClip;
+	
     public class MyPlane extends Plane {
 
         private var keyObj:Object = {}; // 按键记录对象
@@ -24,14 +25,9 @@
             this._moveArea = new MoveArea(GameItem.ScreenWidth, MoveGameItem.panel.width - 50, GameItem.ScreenHeight, 225)
             super(this._moveArea, 0, 0, _speed);
             // 居中显示
-            midDisplay();
-            this.gotoAndStop(1); // 正常状态
-            this.totalLife = this.curLife = 5000; // 血量
-            // 面板初始化
-            panel.updateInfo(this.curLife, this.totalLife)
+            
             that = this;
-            // 加载特效
-            curEffect = [0, 0, 0, 0, 0];
+            
             effectArr = [null, new LifeEffect(), new MoneyEffect(), new JiGunagEffect(), new MagaEffect()];
             // 配置子弹
             bulletTypeArr = [
@@ -59,7 +55,27 @@
                     y: 0
                 }
             ]
+            init();
+           
+        }
+
+        private function init() {
+            midDisplay();
+            this.gotoAndStop(1); // 正常状态
+            this.totalLife = this.curLife = 5000; // 血量
+            // 面板初始化
+            panel.updateInfo(this.curLife, this.totalLife)
+            // 加载特效
+            curEffect = [0, 0, 0, 0, 0];
             fireTimeOutId =setInterval(fire, 400, bulletTypeArr);
+            this.isFreeze = false;
+            this.visible = true;
+             GameItem.stage.addChild(this);
+        }
+        override protected function reBorn(posX:Number=0, posY:Number=0) {
+            
+            init();
+           
         }
         
         public function addLife(num:Number) {
@@ -110,7 +126,16 @@
         
         public function KeyDownHandler(e:KeyboardEvent) {
             keyObj[e.keyCode] = true;
-
+            if(Level.isGameOver && keyObj[32]){
+                Level.isGameOver = false;
+                reBorn();
+				
+				if(Level.gEndPanel){
+					GameItem.rc(Level.gEndPanel);
+				}
+                
+                return;
+            }
             // 清屏导弹
             if (keyObj[32] && panel.canFireMissle()) {
                 if(!fireThrottle){
@@ -232,6 +257,8 @@
             
 
         }
+
+        
 
     }
 

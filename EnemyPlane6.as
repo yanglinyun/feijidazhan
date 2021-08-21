@@ -21,14 +21,14 @@ package {
             this.curLife = this.totalLife = 2500;
             this.moveWay = new StaticMove(this);
 			fireThreeBullet(mustCombArr.concat());
-            fireTimeOutId_s = setInterval(fireThreeBullet, 5000, mustCombArr.concat());
+            EnemyPlane6.fireTimeOutId_s = setInterval(fireThreeBullet, 5000, mustCombArr.concat());
 			
         }
 
         public function myReBorn(posX:Number, posY:Number) {
             reBorn(posX, posY);
 			fireThreeBullet(mustCombArr.concat());
-            fireTimeOutId_s = setInterval(fireThreeBullet, 5000, mustCombArr.concat());
+            EnemyPlane6.fireTimeOutId_s = setInterval(fireThreeBullet, 5000, mustCombArr.concat());
         }
         
          public static function getCurAllEnemyBullet7():Array {
@@ -68,9 +68,10 @@ package {
             _mustCombArr.shift();
             // 跟踪导弹
           
-            genzhongMissleTimeOutId = setTimeout(function() {
-                clearTimeout(genzhongMissleTimeOutId);
+            EnemyPlane6.genzhongMissleTimeOutId = setTimeout(function() {
+                clearTimeout(EnemyPlane6.genzhongMissleTimeOutId);
 				
+                
 				 jiguang.isFreeze = true;
                  rc(jiguang);
 
@@ -110,15 +111,14 @@ package {
 
         }
 
-        // 老王完蛋
+        // 老王挂
         public static function gameOver(){
-            clearTimeout(genzhongMissleTimeOutId);
-            clearInterval(fireTimeOutId_s);
-            
-            
-            // 激光完蛋
-            jiguang.isFreeze = true;
-           
+            // 激光挂
+            clearTimeout(EnemyPlane6.genzhongMissleTimeOutId);
+			jiguang.isFreeze = true;
+            rc(EnemyPlane6.jiguang);
+            clearInterval(EnemyPlane6.fireTimeOutId_s);
+            trace("out "+ genzhongMissleTimeOutId + " interval " + fireTimeOutId_s);
         }
         override protected function freeze(evt:Event = null) {
             // 静止

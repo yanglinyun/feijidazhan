@@ -20,18 +20,7 @@
             GameItem.stage.addChild(this);
         }
 
-        protected function reBorn(posX:Number, posY:Number) {
-            (((getChildByName("lifeBar") as MovieClip).getChildByName("lifeBar") as MovieClip)).gotoAndStop(0)
-            this.x = posX;
-            this.y = posY;
-            //trace("randomBorn");
-            this.gotoAndStop(1);
-            this.curLife = this.totalLife;
-            this.isFreeze = false;
-            this.visible = true;
-            GameItem.stage.addChild(this);
-             this.addEventListener('MoveComplete', freeze);
-        }
+        
 
         override public function bang(force:Number) {
 
@@ -44,7 +33,7 @@
                 panel.updateScore(that.totalLife * MyPlane.isDoubleScore);
                 // boss死亡游戏结束
                 if(this.curLife<=0 && this is EnemyPlane6){
-                     EnemyPlane6.gameOver();
+                    
                      Level.gameOver();
                     return;
                 }
