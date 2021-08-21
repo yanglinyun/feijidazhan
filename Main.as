@@ -7,37 +7,24 @@
 
 	public class Main extends Sprite
 	{
-		private var ScreenWidth:Number;
-		private var ScreenHight:Number;
-
 		private var background:Background;
 		private var panel:Panel;
-		private var myPlaneMoveArea:Object;
 		private var myPlane:MyPlane;
 		private var level:Level;
 		private var keyBoradController:KeyBoradController;
 		// 飞机引导
 		private var planeGuider:PlaneGuider;
-
-
 		private var fp:FPSShow;
 
 		public function Main()
 		{
-                
-			ScreenWidth = stage.stageWidth;
-			ScreenHight = stage.stageHeight;
 			fp = new FPSShow();
 			GameItem.stage = stage;
-            GameItem.ScreenHeight = stage.stageHeight;
+			GameItem.ScreenHeight = stage.stageHeight;
 			GameItem.ScreenWidth = stage.stageWidth;
 
-            panel = new Panel(0,0);
-            
+			panel = new Panel(0,0);
 			MoveGameItem.panel = panel;
-			
-            myPlaneMoveArea = {x:{max:ScreenWidth,min:panel.width - 50,scale:ScreenWidth - panel.width + 50},y:{max:ScreenHight,min:200,scale:ScreenHight - 200}};
-            
 
 			keyBoradController = new KeyBoradController();
 			GameItem.keyBoradController = keyBoradController;
@@ -57,14 +44,12 @@
 			addChild(panel);
 			panel.name = "panel";
 			// guider引导动画开始
-
 			planeGuider = new PlaneGuider(playing);
 			GameItem.stage.addChild(planeGuider);
 		}
 
 		function playing()
 		{
-
 			// 我方飞机注册
 			myPlane = new MyPlane();
 			keyBoradController.addKeyUpDown(myPlane);
@@ -80,86 +65,119 @@
 			updateMoveItems();
 		}
 
+		private function myPlaneHit():void
+		{
+			// 自己撞敌机或道具
+			for (var moveItemIndex:Number = 0; moveItemIndex < Level.moveItemList.length; moveItemIndex++)
+			{
+				var enemyPlaneOrProp:* = Level.moveItemList[moveItemIndex];
+				if ((enemyPlaneOrProp is EnemyPlane && enemyPlaneOrProp.curLife > 0) || enemyPlaneOrProp is Prop)
+				{
+					if (myPlane.hit(enemyPlaneOrProp))
+					{
+						break;
+					}
+				}
+			}
+		}
+
+		private function useMissle()
+		{
+			if (Panel.useMissle)
+			{// 导弹清屏-10点
+				for (var j:Number = 0; j < Level.moveItemList.length; j++)
+				{
+					var enemyPlane:* = Level.moveItemList[j];
+					if (enemyPlane is EnemyPlane && enemyPlane.curLife > 0)
+					{
+						enemyPlane.bang(10);
+					}
+				}
+				//-10点;
+			}
+			Panel.useMissle = false;
+		}
+		
+		private function useJiGuang()
+		{
+			// 我的激光清线
+			var allEnemyPlane:Array = Level.getAllEnemyPlane();
+			if (myPlane.curEffect[3] > 0)
+			{
+				for (var enemyPlaneIndex:Number = 0; enemyPlaneIndex < allEnemyPlane.length; enemyPlaneIndex++)
+				{
+					var jiGuangEnemyPlane:* = allEnemyPlane[enemyPlaneIndex];
+					if (jiGuangEnemyPlane.y <= myPlane.y && (jiGuangEnemyPlane.x >= myPlane.x && jiGuangEnemyPlane.x <= myPlane.x + myPlane.width))
+					{
+					
+						// 由于激光是持续照射所以每帧伤害很小
+						jiGuangEnemyPlane.bang(1);
+					}
+				}
+			}
+		}
+
+		private function myBulletHitEnemyPlane(bullet:Bullet)
+		{
+			//==========我子弹打到敌机==============================//
+			var allEnemyPlane:Array = Level.getAllEnemyPlane();
+			if (myPlane.curEffect[3] == 0)
+			{
+				for (var enemyPlaneIndex:Number = 0; enemyPlaneIndex < allEnemyPlane.length; enemyPlaneIndex++)
+				{
+					var beHitedEnemyPlane:* = allEnemyPlane[enemyPlaneIndex];
+					if (bullet.hit(beHitedEnemyPlane))
+					{
+						
+						break;
+					}
+				}
+			}
+		}
+		
+		private function bulletHit(bullet:Bullet, itemIndex:int){
+			if (!bullet.isFreeze && !(bullet is MissleBullet)) {
+				//子弹移动
+				bullet.move(); 
+				//==========使用导弹===========//
+				useMissle();
+				if (Level.moveItemList[itemIndex] is EnemyPlane && myPlane.curLife > 0) {
+					//==========敌机子弹打到我==============================//
+				    bullet.hit(myPlane);
+				
+				} else if (Level.moveItemList[itemIndex] is MyPlane) {
+					//==========我的激光清线==============================//
+					useJiGuang();
+				    //==========我子弹打到敌机==============================//
+				    myBulletHitEnemyPlane(bullet)
+				}
+			}	
+		}
+
 		private function updateMoveItems():void
 		{
 			// 更新运动物件
-            if(Level.isGameOver){
-                this.removeEventListener(Event.ENTER_FRAME, onEnterframe);
-                return;
-            }
+			if (Level.isGameOver)
+			{
+				this.removeEventListener(Event.ENTER_FRAME, onEnterframe);
+				return;
+			}
 			for (var i:int = 0; i < Level.moveItemList.length; i++)
 			{
-
 				if (! Level.moveItemList[i].isFreeze)
 				{
+					// 物件移动
 					Level.moveItemList[i].move();
 					if (Level.moveItemList[i] is Plane)
 					{
 						// 自己撞敌机或道具
-						for (var j2:Number = 0; j2 < Level.moveItemList.length; j2++)
-						{
-							var enemyPlaneOrProp:* = Level.moveItemList[j2];
-							if ((enemyPlaneOrProp is EnemyPlane && enemyPlaneOrProp.curLife > 0) || enemyPlaneOrProp is Prop)
-							{
-								if (myPlane.hit(enemyPlaneOrProp))
-								{
-									break;
-								}
-							}
-						}
-						// 检测子弹
+						myPlaneHit();
+						// 检测自己子弹
 						Level.moveItemList[i].bulletArr.forEach(function(bullet:Bullet, index:int, arr:Array) {
-						
-						                            // bullet为普通 而非 导弹
-						                            if (!bullet.isFreeze && !(bullet is MissleBullet)) {
-						                                bullet.move(); //子弹移动
-						
-						                                //==========使用导弹===========//
-						                                if (Panel.useMissle) { // 导弹清屏-10点
-						                                    for (var j:Number = 0; j < Level.moveItemList.length; j++) {
-						                                        var enemyPlane:* = Level.moveItemList[j];
-						                                        if (enemyPlane is EnemyPlane && enemyPlane.curLife > 0) {
-						                                            enemyPlane.bang(10) //-10点
-						                                        }
-						                                    }
-						                                    Panel.useMissle = false;
-						
-						                                }
-						                                //==========敌机子弹打到我==============================//
-						                                if (Level.moveItemList[i] is EnemyPlane && myPlane.curLife > 0) {
-						                                    bullet.hit(myPlane);
-						                                } else if (Level.moveItemList[i] is MyPlane) {
-						                                    // 我的激光清线
-						
-						                                    if (myPlane.curEffect[3] > 0) {
-						                                        for (var j3:Number = 0; j3 < Level.moveItemList.length; j3++) {
-						                                            var enemyPlane3:* = Level.moveItemList[j3];
-						                                            if (enemyPlane3 is EnemyPlane && enemyPlane3.curLife > 0) {
-						
-						                                                if (enemyPlane3.y <= myPlane.y && (enemyPlane3.x >= myPlane.x && enemyPlane3.x <= myPlane.x + myPlane.width)) {
-						                                                    trace("对线")
-						                                                    enemyPlane3.bang(enemyPlane3.totalLife);
-						                                                }
-						
-						                                            }
-						                                        }
-						                                    }
-						                                    //==========我子弹打到敌机==============================//
-						                                    for (var j2:Number = 0; j2 < Level.moveItemList.length; j2++) {
-						                                        var enemyPlane2:* = Level.moveItemList[j2];
-						                                        if (enemyPlane2 is EnemyPlane && enemyPlane2.curLife > 0) {
-						
-						                                            if (bullet.hit(enemyPlane2)) {
-						                                                break;
-						                                            }
-						
-						                                        }
-						                                    }
-						                                }
-						                            }
-						                        });
+							// bullet为普通 而非 导弹
+						    bulletHit(bullet,i);
+						});
 					}
-
 				}
 			}
 		}

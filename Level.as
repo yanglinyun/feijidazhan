@@ -45,8 +45,14 @@
                 return element is Prop && !element.isFreeze;
             });
         }
+        
+        public static function getAllEnemyPlane():Array {
+            return Level.moveItemList.filter(function(element:*, index:int, arr:Array):Boolean {
+                return element is EnemyPlane && element.curLife > 0;
+            });
+        }
 
-         public static function stageHasBoss():Boolean {
+        public static function stageHasBoss():Boolean {
             return Level.moveItemList.filter(function(element:*, index:int, arr:Array):Boolean {
                 return element is EnemyPlane6 && !element.isFreeze;
             }).length>0?true:false;
@@ -64,60 +70,45 @@
        // 游戏结束
         public static function gameOver(){
             isGameOver = true;
-           
             for(var i:int=0; i<Level.moveItemList.length; i++){
-                
-                var curItem:* = Level.moveItemList[i];
-                if(curItem is Prop || curItem is Plane || curItem is EnemyBullet7){
-                    if(curItem is EnemyBullet7){
-                        trace(curItem)
+                // 卸载场内所有移动物件 除 背景
+                var item:MoveGameItem = Level.moveItemList[i];
+                if(!item.isFreeze && (item is Plane || item is Prop)){
+                    if(item is Plane){
+                      (item as Plane).destory();
                     }
-                    if(curItem is Plane){
-                        for(var j:int=0; j<curItem.bulletArr.length; j++){
-                            var curPlaneBullet:* = curItem.bulletArr[j];
-                            if (GameItem.stage.contains(curPlaneBullet)) {
-                               
-                                GameItem.stage.removeChild(curPlaneBullet);
-                            }
-                        }
-                        if(curItem is MyPlane){
-                            curItem.gameOver();
-                        }
-                    }
-                    try
-                    {
-                        if(GameItem.stage.contains(curItem)) {
-                            GameItem.stage.removeChild(curItem);
-                        }
-                    }
-                    catch (error:Error)
-                    {
-                        trace("删除错误" + curItem);
-                    }
-                   
+                    
+                    GameItem.rc(item);
                 }
-                
             }   
-         new GameEndPanel();
+            new GameEndPanel();
         }
 
         // 阵型配置 1-6 各类敌机
         private var config = [
             // -404 必须消灭当行全部飞机后面飞机才出现
             // -404 反之
-           
-           
-            [1,0,1,0,1,0,1,-405],
-            [1, 0, 0, 0, 0, 0, 1,-405],
-            [0, 1, 0, 0, 0, 1, 0,-405],
-            [0, 0, 1, 0, 1, 0, 0,-405],
-            [0, 0, 0, 1, 0, 0, 0,-405],
-            [0, 0, 1, 0, 1, 0, 0,-405],
-            [0, 1, 0, 0, 0, 1, 0,-405],
-            [1, 0, 0, 0, 0, 0, 1,-405],
-            [2, 0, 0, 0, 0, 0, 2,-404],
-            [0, 3, 0, 0, 0, 3, 0,-404],
-            [0, 0, 4, 0, 0, 4, 0,-404],
+           //[0, 0, 2, 0, 0, 2, 0,-404]
+            // [1,1,1,1,1,1,1,-405],
+            // [1,0,1,0,1,0,1,-405],
+            // [1, 0, 0, 0, 0, 0, 1,-405],
+            // [0, 1, 0, 0, 0, 1, 0,-405],
+            // [0, 0, 1, 0, 1, 0, 0,-405],
+            // [0, 0, 0, 1, 0, 0, 0,-405],
+            // [0, 0, 1, 0, 1, 0, 0,-405],
+            // [0, 1, 0, 0, 0, 1, 0,-405],
+            // [1, 0, 0, 0, 0, 0, 1,-405],
+            // [2, 0, 0, 0, 0, 0, 2,-404],
+            // [0, 3, 0, 0, 0, 3, 0,-404],
+            // [0, 0, 4, 0, 0, 4, 0,-404],
+            // [4, 3, 4, 4, 4, 3, 4,-404],
+            // [1, 0, 0, 0, 0, 0, 1,-405],
+            // [0, 1, 0, 0, 0, 1, 0,-405],
+            // [0, 0, 1, 0, 1, 0, 0,-405],
+            // [0, 0, 0, 1, 0, 0, 0,-405],
+            // [0, 0, 1, 0, 1, 0, 0,-405],
+            // [0, 1, 0, 0, 0, 1, 0,-405],
+            // [1, 0, 0, 0, 0, 0, 1,-405],
             [-1,0,0,0,0,0,0,-404]
             ];
 

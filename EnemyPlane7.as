@@ -46,9 +46,7 @@
             clearInterval(fireTimeOutId);
 
             this.isFreeze = true;
-            if (GameItem.stage.contains(this)) {
-                GameItem.stage.removeChild(this);
-            }
+            rc(this);
 
         }
 

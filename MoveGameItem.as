@@ -38,9 +38,7 @@
         protected function freeze(evt:Event = null) {
             this.isFreeze = true;
           
-            if (GameItem.stage.contains(this)) {
-                GameItem.stage.removeChild(this);
-            }
+            rc(this)
 
             this.removeEventListener('MoveComplete', freeze);
         }

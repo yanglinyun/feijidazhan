@@ -8,43 +8,66 @@
 
     public class MyPlane extends Plane {
 
-        private var keyObj:Object = {};
-        private var keyArr:Array = [];
-        private var _moveArea:MoveArea;
-        private var _speed:Number = 7;
+        private var keyObj:Object = {}; // 按键记录对象
+        private var _moveArea:MoveArea; // 个人飞机移动范围
+        private var _speed:Number = 7; 
         private var that:MyPlane;
-        private var timeOutId:uint;
+        private var bangTimeOutId:uint;
         private var fireThrottle:Boolean = false; //1s 一次
-        private var fireThrottleTimeId:uint; //1s 一次
+        private var missleTypeArr;
         public static var isDoubleScore:uint = 1; // 双倍经验
-        public var curEffect:Array; // 当前特效 0 正常
+        public var curEffect:Array; // 当前特效 0 正常 非0对应特效
         public var effectArr:Array; // 特效集合
-
+       
         public function MyPlane() {
 
             this._moveArea = new MoveArea(GameItem.ScreenWidth, MoveGameItem.panel.width - 50, GameItem.ScreenHeight, 225)
             super(this._moveArea, 0, 0, _speed);
-            //bulletTypeArr.push(MyBullet1);
             // 居中显示
             midDisplay();
-
             this.gotoAndStop(1); // 正常状态
             this.totalLife = this.curLife = 5000; // 血量
+            // 面板初始化
             panel.updateInfo(this.curLife, this.totalLife)
-
-            fireThrottleTimeId =setInterval(fireThreeBullet, 400, [TwoBullet, ThreeBullet, ThreeBullet]);
-
             that = this;
             // 加载特效
             curEffect = [0, 0, 0, 0, 0];
             effectArr = [null, new LifeEffect(), new MoneyEffect(), new JiGunagEffect(), new MagaEffect()];
+            // 配置子弹
+            bulletTypeArr = [
+                {
+                    type:TwoBullet,
+                    x:  this.width / 2,
+                    y: 0
+                },
+                {
+                    type:ThreeBullet,
+                    x:  this.width / 2 - 30,
+                    y:  20
+                },
+                {
+                    type:ThreeBullet,
+                    x:  this.width / 2 + 30,
+                    y:  20
+                }
+            ];
+            // 配置炸弹
+            missleTypeArr = [
+                {
+                    type:MissleBullet,
+                    x:  this.width / 2,
+                    y: 0
+                }
+            ]
+            fireTimeOutId =setInterval(fire, 400, bulletTypeArr);
         }
-
+        
         public function addLife(num:Number) {
             this.curLife = (this.curLife + num) >= this.totalLife ? this.totalLife : (this.curLife + num);
             panel.updateInfo(this.curLife, this.totalLife)
         }
 
+        // 飞机碰敌机 或 子弹
         override public function hit(target:*):Boolean {
             if (this.hitTestObject(target)) {
                 if (target is Plane) {
@@ -59,81 +82,14 @@
             }
             return false;
         }
-        ;
-
-        private function fireThreeBullet(bulletComb:Array) {
-            var bullet:*;
-            var threeBulletArr:Array = [];
-            var mustCombArr:Array = [TwoBullet, ThreeBullet, ThreeBullet];
-            for (var i:int = 0; i < bulletArr.length; i++) {
-
-                if (mustCombArr.length == 0) {
-                    break; // 查询完毕
-                }
-                if (bulletArr[i].isFreeze && (bulletArr[i] is mustCombArr[0])) {
-
-                    threeBulletArr.push(bulletArr[i]);
-                    mustCombArr.shift();
-                }
-            }
-            if (mustCombArr.length == 0) {
-                threeBulletArr[0].born(this.x + this.width / 2, this.y);
-                threeBulletArr[1].born(this.x + this.width / 2 - 30, this.y + 20);
-                threeBulletArr[2].born(this.x + this.width / 2 + 30, this.y + 20);
-                GameItem.stage.addChild(threeBulletArr[0]);
-                GameItem.stage.addChild(threeBulletArr[1]);
-                GameItem.stage.addChild(threeBulletArr[2]);
-                return;
-            }
-
-            // 新new
-            var twoBullet:TwoBullet = new bulletComb[0](this.x + this.width / 2, this.y);
-            var leftThreeBullet:ThreeBullet = new bulletComb[1](this.x + this.width / 2 - 30, this.y + 20);
-            var rightThreeBullet:ThreeBullet = new bulletComb[2](this.x + this.width / 2 + 30, this.y + 20);
-
-
-            bulletArr.push(twoBullet);
-            bulletArr.push(leftThreeBullet);
-            bulletArr.push(rightThreeBullet);
-
-
-            GameItem.stage.addChild(twoBullet);
-            GameItem.stage.addChild(leftThreeBullet);
-            GameItem.stage.addChild(rightThreeBullet);
-        }
-
-        override protected function fire(bulletType:*) {
-            var bullet:*;
-            for (var i:int = 0; i < bulletArr.length; i++) {
-                ////trace(bulletArr.length);
-                if (bulletArr[i].isFreeze && (bulletArr[i] is bulletType)) {
-                    //////trace("========重复利用========");
-                    bulletArr[i].born(this.x + this.width / 2, this.y);
-                    //////trace("========重复利用========");
-                    return;
-                }
-            }
-            // 新new
-            bullet = new bulletType(this.x + this.width / 2, this.y);
-
-            bulletArr.push(bullet);
-            GameItem.stage.addChild(bullet);
-
-        }
 
         override public function bang(force:Number) {
 
             this.curLife -= force;
-            ////trace("我飞机当前血量"+this.curLife)
+            // 玩家死亡游戏结束
             if (this.curLife <= 0) {
-                // that.gotoAndStop(3);
-                // // timeOutId || clearTimeout(timeOutId);
-                // timeOutId = setTimeout(function(){
-                // 	clearTimeout(timeOutId);
-                // 	that.isFreeze = false;
-                // 	that.randomBorn();
-                // }, 100)
-                ////trace("游戏结束");
+                Level.gameOver();
+                return;
             } else {
                 if (keyObj[37]) { // 左移损害
                     this.gotoAndStop(6);
@@ -143,50 +99,30 @@
                     this.gotoAndStop(2);
                 }
 
-                timeOutId = setTimeout(function() {
-                    clearTimeout(timeOutId);
+                bangTimeOutId = setTimeout(function() {
+                    clearTimeout(bangTimeOutId);
                     that.gotoAndStop(1);
                 }, 500)
             }
-            // 玩家死亡游戏结束
-            if(this.curLife<=0){
-
-                Level.gameOver();
-                 return;
-            }
+            
             panel.updateInfo(this.curLife, this.totalLife)
         }
-        // 料理后事
-        public function gameOver(){
-            GameItem.keyBoradController.clearKeyUpDown();
-            if(GameItem.stage.contains(this)) {
-                GameItem.stage.removeChild(this);
-            }
-            clearInterval(fireThrottleTimeId);
-            for(var i:int; i<this.bulletArr.length; i++){
-                if(GameItem.stage.contains(this.bulletArr[i])) {
-                    GameItem.stage.removeChild(this.bulletArr[i]);
-                }
-               
-            }
-        }
+        
         public function KeyDownHandler(e:KeyboardEvent) {
             keyObj[e.keyCode] = true;
 
             // 清屏导弹
             if (keyObj[32] && panel.canFireMissle()) {
-                // if(!fireThrottle){
-                // 	fireThrottle = true;
-                // 	fireThrottleTimeId = setTimeout(function ():void
-                // 	{
-                // 		clearTimeout(fireThrottleTimeId)
-                // 		fireThrottle = false;
-                // 	},1000);
-                // 	this.fire(MissleBullet);
-
-                // }
-                this.fire(MissleBullet);
-
+                if(!fireThrottle){
+                	fireThrottle = true;
+                	fireTimeOutId = setTimeout(function ():void
+                	{
+                		clearTimeout(fireTimeOutId)
+                		fireThrottle = false;
+                	},1000);
+                	this.fire(missleTypeArr);
+                }
+                
 
             }
 
@@ -222,8 +158,6 @@
             nextPosX = this.x;
             nextPosY = this.y;
 
-
-
             if (keyObj[37]) {
                 nextPosX -= this.speed;
                 this.gotoAndStop(5);
@@ -235,7 +169,6 @@
                 this.gotoAndStop(3);
                 nextPosX += this.speed;
             }
-
             if (keyObj[40]) {
                 nextPosY += this.speed;
             }
@@ -276,6 +209,27 @@
                 }
             }
 
+
+        }
+
+        override public function destory() {
+            // 释放子弹
+            for(var i:int=0; i<bulletArr.length; i++){
+                var bullet:Bullet = bulletArr[i];
+                if(!bullet.isFreeze){
+                    bullet.isFreeze = false;
+                    
+                }
+                GameItem.rc(bullet);
+
+            }
+            // 释放定时发射子弹
+            clearInterval(fireTimeOutId);
+            this.isFreeze = true;
+            // 飞机道具特效清除
+            Prop.clearAllTimeOut();
+            GameItem.rc(this)
+            
 
         }
 

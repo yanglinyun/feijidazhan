@@ -37,10 +37,8 @@
                 bossEffect.addFrameScript(bossEffect.totalFrames - 1, function() {
                     Level.bossEffectComplete = false;
                     bossEffect.stop();
+                    GameItem.rc(bossEffect)
                     
-                    if (GameItem.stage.contains(bossEffect)) {
-                         GameItem.stage.removeChild(bossEffect);
-                    }
                    
                     Level.bossEffectComplete = true;
 

@@ -72,9 +72,7 @@ package {
                 clearTimeout(genzhongMissleTimeOutId);
 				
 				 jiguang.isFreeze = true;
-                if (GameItem.stage.contains(jiguang)) {
-                    GameItem.stage.removeChild(jiguang);
-                }
+                 rc(jiguang);
 
                 for (var i:int = 0; i < moveItemList.length; i++) {
 					
@@ -120,9 +118,6 @@ package {
             
             // 激光完蛋
             jiguang.isFreeze = true;
-            // if (GameItem.stage.contains(jiguang)) {
-            //     GameItem.stage.removeChild(jiguang);
-            // }
            
         }
         override protected function freeze(evt:Event = null) {

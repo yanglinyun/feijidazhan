@@ -17,6 +17,11 @@
             this.rotation = rotation;
         }
 
+        public static function rc(Object:*){
+            if (GameItem.stage.contains(Object)) {
+                GameItem.stage.removeChild(Object);
+            }
+        }
 
     }
 

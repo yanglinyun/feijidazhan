@@ -11,9 +11,7 @@ package  {
 			
 			super(0,0);
 			this.getChildByName('btnok').addEventListener(MouseEvent.MOUSE_DOWN,function(){
-				if (GameItem.stage.contains(that)) {
-                    GameItem.stage.removeChild(that);
-                }
+				rc(that)
 				playing();
 				
 			})

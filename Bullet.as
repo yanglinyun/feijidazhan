@@ -22,9 +22,7 @@
             if (this.hitTestObject(target)) {
                 target.bang(this.force * (isHitMiddle(target)?2:1));
                 this.isFreeze = true;
-                if (GameItem.stage.contains(this)) {
-                    GameItem.stage.removeChild(this);
-                }
+                rc(this);
                 //trace(GameItem.stage);
                 return true;
             }
@@ -53,9 +51,8 @@
 
         override protected function freeze(evt:Event = null) {
             this.isFreeze = true;
-            if (GameItem.stage.contains(this)) {
-                stage.removeChild(this);
-            }
+            rc(this);
+            
             this.removeEventListener('MoveComplete', freeze);
 
 

@@ -9,7 +9,6 @@
         private var that:EnemyPlane;
         private var timeOutId:uint = 0;
         private var dieTimeOutId:uint = 0;
-        protected var fireTimeOutId:uint;
         protected var bulletExistPlaneDieIntervalId:uint;
 
         public function EnemyPlane(posX:Number, posY:Number, moveArea:MoveArea, speed:Number) {
@@ -42,9 +41,6 @@
             //trace("当前血量"+this.curLife)
             if (this.curLife <= 0) {
                 this.gotoAndStop(3);
-
-                
-
                 panel.updateScore(that.totalLife * MyPlane.isDoubleScore);
                 // boss死亡游戏结束
                 if(this.curLife<=0 && this is EnemyPlane6){
@@ -73,6 +69,7 @@
             }
         }
 
+      
         protected function dieFreeze(evt:Event = null) {
 
             bulletExistPlaneDieIntervalId = setInterval(function() {
@@ -89,10 +86,7 @@
                     clearInterval(bulletExistPlaneDieIntervalId);
 
                     that.isFreeze = true;
-                    if (GameItem.stage.contains(that)) {
-                        GameItem.stage.removeChild(that);
-
-                    }
+                    rc(that);
 
                 }
 
