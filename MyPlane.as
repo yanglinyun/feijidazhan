@@ -254,7 +254,10 @@
             // 飞机道具特效清除
             Prop.clearAllTimeOut();
             GameItem.rc(this)
-            
+            // 清除特效
+            for(var j:int=1; j<effectArr.length; j++){
+                effectArr[j].update(-1000,0);
+            }
 
         }
 
