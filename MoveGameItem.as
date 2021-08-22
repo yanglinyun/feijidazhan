@@ -37,7 +37,9 @@
 
         protected function freeze(evt:Event = null) {
             this.isFreeze = true;
-          
+            if(this is Prop){
+                trace("Prop移除")
+            }
             rc(this)
 
             this.removeEventListener('MoveComplete', freeze);

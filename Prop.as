@@ -17,13 +17,32 @@
             this._moveArea = new MoveArea(GameItem.ScreenWidth, MoveGameItem.panel.width - 50, GameItem.ScreenHeight, 0)
             super(moveArea, posX, posY, speed, width, height, rotation);
             that = this;
-            type = Math.ceil(Math.random() * 4);
-
-            buff();
+           
+            setType();
+           
             timeOutIdArr = new Array(5);
             this.moveWay = new LineMove(this, [6], [this.speed], [{x: 960, y: this._moveArea.yMax + this.height}])
             GameItem.stage.addChild(this);
 
+        }
+
+        private function reBorn(posX:Number=0, posY:Number=0) {
+            this.x = posX;
+            this.y = posY;
+            this.isFreeze = false;
+            this.visible = true;
+            this.setType(); 
+            var curProp:MovieClip = ((this.getChildByName("mc") as MovieClip));
+            // 正常动画 不爆炸
+            curProp.gotoAndStop(1);
+            GameItem.stage.addChild(this);
+            trace("道具重用");
+            this.addEventListener('MoveComplete', freeze);
+        }
+
+        private function setType(){
+            type = Math.ceil(Math.random() * 4);
+             buff();
         }
 
         public static function clearAllTimeOut(){
@@ -103,7 +122,6 @@
             timeOutIdArr[4] = setTimeout(function() {
                 that.myPlane.curEffect[4] = 0;
                 clearTimeout(timeOutIdArr[4]);
-                timeOutIdArr[4] = 0;
                 MyPlane.isDoubleScore = 1;
                 if (GameItem.stage.contains(that.myPlane.effectArr[4])) {
                     GameItem.stage.removeChild(that.myPlane.effectArr[4]);
@@ -127,8 +145,7 @@
             timeOutIdArr[3] = setTimeout(function() {
                 that.myPlane.curEffect[3] = 0;
                 clearTimeout(timeOutIdArr[3]);
-                timeOutIdArr[3] = 0;
-
+                trace("激光移除")
                 rc(that.myPlane.effectArr[3])
                 
             }, 2000)
@@ -143,7 +160,6 @@
             timeOutIdArr[2] = setTimeout(function() {
                 that.myPlane.curEffect[2] = 0;
                 clearTimeout(timeOutIdArr[2]);
-                timeOutIdArr[2] = 0;
                 MyPlane.isDoubleScore = 1;
                 rc(that.myPlane.effectArr[2])
               
@@ -157,7 +173,6 @@
             timeOutIdArr[1] = setTimeout(function() {
                 that.myPlane.curEffect[1] = 0;
                 clearTimeout(timeOutIdArr[1]);
-                timeOutIdArr[1] = 0;
                 rc(that.myPlane.effectArr[1])
                 
             }, 2000)
@@ -167,16 +182,13 @@
         public static function generate(posX:Number, posY:Number) {
             for (var j:int = 0; j < Level.moveItemList.length; j++) {
                 if (Level.moveItemList[j].isFreeze && (Level.moveItemList[j] is Prop)) {
-                    Level.moveItemList[j].x = posX;
-                    Level.moveItemList[j].y = posY;
-                    Level.moveItemList[j].isFreeze = false;
-
+                    Level.moveItemList[j].reBorn(posX, posY)
                     return;
                 }
             }
-
             var prop:* = new Prop(posX, posY);
             Level.moveItemList.push(prop);
+          
         }
 
         public static function clearAllProp() {

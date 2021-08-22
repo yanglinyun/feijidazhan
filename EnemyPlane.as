@@ -33,18 +33,13 @@
                 panel.updateScore(that.totalLife * MyPlane.isDoubleScore);
                 // boss死亡游戏结束
                 if(this.curLife<=0 && this is EnemyPlane6){
-                    
-                     Level.gameOver();
+                    Level.gameOver();
                     return;
                 }
                 dieTimeOutId = setTimeout(function() {
                     clearTimeout(dieTimeOutId);
-
                     dieTimeOutId = 0;
-
                     that.dieFreeze();
-
-
                 }, 500)
             } else {
                 this.gotoAndStop(2);
@@ -60,7 +55,7 @@
 
       
         protected function dieFreeze(evt:Event = null) {
-
+            // 可能子弹没有被消灭 飞机必须仍然在场
             bulletExistPlaneDieIntervalId = setInterval(function() {
 
                 var allBulletFreeze = true;
@@ -73,16 +68,16 @@
                 }
                 if (allBulletFreeze) {
                     clearInterval(bulletExistPlaneDieIntervalId);
-
                     that.isFreeze = true;
                     rc(that);
-
                 }
 
             }, 100)
 
-            this.visible = false;
-            Prop.generate(this.x, this.y);
+            that.visible = false;
+            Prop.generate(that.x, that.y);
+            that.x = -1000;
+            
             clearInterval(fireTimeOutId);
             //this.randomBorn();
         }
