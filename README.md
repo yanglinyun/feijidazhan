@@ -1,6 +1,6 @@
 
 ### UML类图
-<img src="./img/飞机大战UML类图.jpg"/>
+![avatar](./img/飞机大战UML类图.jpg)
 ### 1.控制己方飞机移动（鼠标和键盘控制二选一实现），固定间隔时间自动发射子弹。
 * 实现方式: 创建键盘控制类，统一监听舞台键盘按下、抬起事件、再分别派发到注册了相关事件的元件上(如我方飞机)
 * 文件: `KeyBoradController.as`
@@ -80,7 +80,7 @@ override public function move(isMyPlane:Boolean = false) {
 * 实现方式:创建Move类,尽管运动轨迹多种，但细分每个运动周期看都为短距离的线性运动，所以从Move派生出LineMove类
 * 文件: `LineMove.as`
 * 垂直(1号敌机子弹(EnemyBullet1.as)从上到下移动)
-<img src="./img/垂直运动.gif"/>
+![avatar](./img/垂直运动.gif)
 ```
 public function EnemyBullet1(posX:Number, posY:Number, moveArea:Object=null, speed:Number = 8) {
     super(moveArea, posX, posY, speed);
@@ -90,7 +90,7 @@ public function EnemyBullet1(posX:Number, posY:Number, moveArea:Object=null, spe
 }
 ```
 * 散射(4号敌机散射子弹(EnemyBullet4.as))
-<img src="./img/散射运动.gif"/>
+![avatar](./img/散射运动.gif)
 ```
  public function EnemyBullet4(posX:Number, posY:Number, degree:Number, speed:Number = 8, moveArea:Object = null) {
     super(moveArea, posX, posY, speed);
@@ -102,7 +102,7 @@ public function EnemyBullet1(posX:Number, posY:Number, moveArea:Object=null, spe
 }
 ```
 * 追踪(7号敌机跟踪子弹(EnemyBullet7.as))
-<img src="./img/跟踪导弹.gif"/>
+![avatar](./img/跟踪导弹.gif)
 ```
 public function EnemyBullet7(posX:Number, posY:Number, isLeft:Boolean, isStraight:Boolean=false, speed:Number = 8, moveArea:Object = null) {
     super(moveArea, posX, posY, speed);
@@ -192,13 +192,13 @@ override public function bang(force:Number) {
 ### 6.实现磁铁、生命药水和双倍积分道具效果。
 * 实现方式: 我方飞机维护一个特效数组，和一个对应的特效开关状态管理数组，如果[0,1,1,1] 就表示1-3号特效效果为开，在下一帧内就会渲染对应特效
 * 实现文件: MyPlane.as, Effect.as, Prop.as;
-<img src="./img/特效.gif"/>
+![avatar](./img/特效.gif)
 
 ### 7.实现导弹效果，导弹使用有冷却时间。
 * 实现方式: 首先游戏面板维护一8个导弹组成的导弹数组，如果玩家按空格发射导弹，首先判断是否有可用导弹，如果没有就不能发射导弹，如果有
 就对场上所有飞机发送飞机被伤害10点的消息，有飞机.bang函数处理。同时，导弹开始冷却，冷却动画完毕后，导弹可用属性置为`true`,冷却动画停止。
 * 实现文件`Panel.as`
-<img src="./img/导弹效果.gif"/>
+![avatar](./img/导弹效果.gif)
 ```
         private function initMissleArr():void {
         }
@@ -270,7 +270,7 @@ override public function bang(force:Number) {
 ### 1.激光道具，拾取发射激光
 * 实现方式: 激光只能直线发射 对于Boss与我方的激光 其伤害范围为 x:[飞机左右X间] y:飞机头部y上面这部分区域，直线将在这部分区域的敌机发送bang消息，即可实现激光伤害。
 * 实现文件: Main.as
-<img src="./img/激光.gif"/>
+![avatar](./img/激光.gif)
 ```
 	private function useJiGuang()
 		{
@@ -294,7 +294,7 @@ override public function bang(force:Number) {
 ### 2.Boss敌机
 * 实现方式: Boss战机特点在于 在关卡剧情的最后 且必须消灭它 游戏就结束。通常其出现流程为先播放一个Boss出厂动画，出来一左一右小飞机，动画期间是不受伤害的。那这样做，先播放动画，一旦播放完毕，马上使用真实的boss飞机与xiaoBoss飞机去替换动画上的位置。
 * 实现文件: `LevelRow.as`
-<img src="./img/Boss.gif"/>
+![avatar](./img/Boss.gif)
 ```
             if(row[0]==-1){
                 // 播放boss动画
@@ -359,7 +359,7 @@ override public function bang(force:Number) {
 ```
 ### 4.游戏引导教程
 * 实现方式: 首先有123 3个引导，只需为每个面板的点击按钮添加点击事件，A点了A被卸载B被显示即可
-<img src="./img/引导.gif"/>
+![avatar](./img/引导.gif)
 ```
 package  {
 	import flash.events.MouseEvent;
@@ -383,4 +383,4 @@ package  {
 ### 5.死亡重玩
 * 实现方式: Boss被打死 或 我方挂了 都触发游戏结束 玩家只需要回车又可以重玩。那么我们使用单例模式构建一个结束面板，当死亡后立即清除场上所有物件，剧情回退到开头，飞机立即初始化。
 * GameEndPanel.as
-<img src="./img/重玩.gif"/>
+![avatar](./img/重玩.gif)
